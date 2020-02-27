@@ -19,13 +19,8 @@ def parent2child(studydata):
     return studydata
 
 
-def Box2dataframe(curated_fileid_start):  # ,study,site,datatype,boxsnapshotfolderid,boxsnapshotQCfolderid):
-    # get current best curated data from BOX and read into pandas dataframe for QC
-    raw_fileid = curated_fileid_start
-    rawobject = box.download_file(raw_fileid)
-    data_path = os.path.join(cache_space, rawobject.get().name)
-    raw = pd.read_csv(data_path, header=0, low_memory=False, encoding='ISO-8859-1')
-    return raw
+def Box2dataframe(curated_fileid_start):
+    return box.Box2dataframe(curated_fileid_start)
 
 
 def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa', dframe=None):

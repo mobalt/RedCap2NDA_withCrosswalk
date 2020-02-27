@@ -6,7 +6,186 @@ from io import BytesIO
 import numpy as np
 import pandas as pd
 import pycurl
-from download.box import LifespanBox
+from libs.box import LifespanBox
+
+
+def parent2child(studydata):
+    studydata = studydata \
+        .drop(columns={'parent_id', 'subject', 'flagged'}) \
+        .rename(columns={'child_id': 'subject_id'})
+    new = studydata['subject_id'].str.split("_", 1, expand=True)
+    studydata['subject'] = new[0].str.strip()
+    studydata['flagged'] = new[1].str.strip()
+    return studydata
+
+
+def Box2dataframe(curated_fileid_start):  # ,study,site,datatype,boxsnapshotfolderid,boxsnapshotQCfolderid):
+    # get current best curated data from BOX and read into pandas dataframe for QC
+    raw_fileid = curated_fileid_start
+    rawobject = box.download_file(raw_fileid)
+    data_path = os.path.join(cache_space, rawobject.get().name)
+    raw = pd.read_csv(data_path, header=0, low_memory=False, encoding='ISO-8859-1')
+    return raw
+
+
+def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa', dframe=None):
+    """
+    Takes list of vars from the crosswalk, gets the data from Redcap, and puts into structure format after
+    merging with NDAR requiredvars.  Outputs a csv structure in NDA format to pathstructureout location
+    """
+    if dframe is not None:
+        studydata = dframe
+    else:
+        studydata = getredcapfieldsjson(fieldlist=vars, study=studystr)
+    # get the relevant rows of the crosswalk
+    # inner merge works for redcap source..need right merge for box, though, to get extra vars for missing people
+    crosswalk_subset = \
+        pd.merge(crosswalk, pd.DataFrame(vars, columns=['HCP-D Element']), on='HCP-D Element', how='inner')[
+            ['NDA Structure', 'NDA Element', 'HCP-D Element', 'HCP-D Source',
+             'CCF action requested',
+             'HCP-D Element name in uploaded file',
+             'requested_python']]
+    # execute transformation codes stored in the crosswalk
+    for index, row in crosswalk_subset.iterrows():
+        if pd.isna(row['requested_python']):
+            pass
+        else:
+            exec(row['requested_python'])
+    # remove fields with empty values HCP-D Element name in uploaded file -- these are empty because NDA doesnt want them
+    crosswalk_subset = crosswalk_subset.loc[crosswalk_subset['HCP-D Element name in uploaded file'].isnull() == False]
+    listout = ['subject', 'flagged', 'interview_date', 'interview_age', 'gender'] + list(
+        crosswalk_subset['HCP-D Element name in uploaded file'])
+    # output new variables and subset to those not flagged for withdrawal.
+    transformed = studydata[listout].loc[studydata.flagged.isnull() == True].drop(
+        columns={'flagged', 'interview_date', 'gender', 'interview_age'})
+    # merge with required fields from vars in intradb staging (guid, etc)
+    # not sure whether it makes sense to pull these in here or recalculate on fly from redcap.
+    # future issues:  compare this approach (e.g. pull from the file above named 'ndar') vs. what happens in the applycrosswalk.py
+    # program for HCD, which regenerates on fly...will require some recodeing below to pull from redcap...
+    # might just be easier to pull once...but how will this affect visit numbers?
+    ndarsub = ndar[['nda_guid', 'subjectped', 'nda_gender', 'nda_interview_age', 'nda_interview_date']].rename(
+        columns={'nda_guid': 'subjectkey', 'subjectped': 'src_subject_id', 'nda_gender': 'gender',
+                 'nda_interview_date': 'interview_date', 'nda_interview_age': 'interview_age'}).copy()
+    dout = pd.merge(ndarsub, transformed, how='left', left_on='src_subject_id', right_on='subject').drop(
+        columns='subject')
+    dout['interview_date'] = pd.to_datetime(dout['interview_date']).dt.strftime('%m/%d/%Y')
+    # now export
+    crosswalk_subset.reset_index(inplace=True)
+    strucroot = crosswalk_subset['NDA Structure'].str.strip().str[:-2][0]
+    strucnum = crosswalk_subset['NDA Structure'].str.strip().str[-2:][0]
+    # finalsubset - i.e. no withdraws
+    # subjectkey	src_subject_id	interview_age	interview_date	gender
+    filePath = os.path.join(pathstructuresout, 'HCPD_' + strucroot + strucnum + '_' + snapshotdate + '.csv')
+    if os.path.exists(filePath):
+        os.remove(filePath)
+    else:
+        pass
+        # print("Can not delete the file as it doesn't exists")
+
+    with open(filePath, 'a') as f:
+        f.write(strucroot + "," + str(int(strucnum)) + "\n")
+        dout.to_csv(f, index=False)
+
+
+# use json format because otherwise commas in strings convert wrong in csv read
+def getredcapfieldsjson(fieldlist, study='hcpdparent '):  # , token=token[0],field=field[0],event=event[0]):
+    """
+    Downloads requested fields from Redcap databases specified by details in redcapconfig file
+    Returns panda dataframe with fields 'study', 'Subject_ID, 'subject', and 'flagged', where 'Subject_ID' is the
+    patient id in the database of interest (sometimes called subject_id, parent_id) as well as requested fields.
+    subject is this same id stripped of underscores or flags like 'excluded' to make it easier to merge
+    flagged contains the extra characters other than the id so you can keep track of who should NOT be uploaded to NDA
+    or elsewwhere shared
+    """
+    auth = pd.read_csv(redcapconfigfile)
+    studydata = pd.DataFrame()
+    fieldlistlabel = ['fields[' + str(i) + ']' for i in range(5, len(fieldlist) + 5)]
+    fieldrow = dict(zip(fieldlistlabel, fieldlist))
+    d1 = {'token': auth.loc[auth.study == study, 'token'].values[0], 'content': 'record', 'format': 'json',
+          'type': 'flat',
+          'fields[0]': auth.loc[auth.study == study, 'field'].values[0],
+          'fields[1]': auth.loc[auth.study == study, 'interview_date'].values[0],
+          'fields[2]': auth.loc[auth.study == study, 'sexatbirth'].values[0],
+          'fields[3]': auth.loc[auth.study == study, 'sitenum'].values[0],
+          'fields[4]': auth.loc[auth.study == study, 'dobvar'].values[0]}
+    d2 = fieldrow
+    d3 = {'events[0]': auth.loc[auth.study == study, 'event'].values[0], 'rawOrLabel': 'raw',
+          'rawOrLabelHeaders': 'raw',
+          'exportCheckboxLabel': 'false',
+          'exportSurveyFields': 'false', 'exportDataAccessGroups': 'false', 'returnFormat': 'json'}
+    data = {**d1, **d2, **d3}
+    buf = BytesIO()
+    ch = pycurl.Curl()
+    ch.setopt(ch.URL, 'https://redcap.wustl.edu/redcap/srvrs/prod_v3_1_0_001/redcap/api/')
+    ch.setopt(ch.HTTPPOST, list(data.items()))
+    ch.setopt(ch.WRITEDATA, buf)
+    ch.perform()
+    ch.close()
+    htmlString = buf.getvalue().decode('UTF-8')
+    buf.close()
+    d = json.loads(htmlString)
+    pexpanded = pd.DataFrame(d)
+    pexpanded = pexpanded.loc[~(pexpanded[auth.loc[auth.study == study, 'field'].values[0]] == '')]  ##
+    new = pexpanded[auth.loc[auth.study == study, 'field'].values[0]].str.split("_", 1, expand=True)
+    pexpanded['subject'] = new[0].str.strip()
+    pexpanded['flagged'] = new[1].str.strip()
+    pexpanded['study'] = study  # auth.study[i]
+    studydata = pd.concat([studydata, pexpanded], axis=0, sort=True)
+    studydata = studydata.rename(columns={auth.loc[auth.study == study, 'interview_date'].values[0]: 'interview_date'})
+    # Convert age in years to age in months
+    # note that dob is hardcoded var name here because all redcap databases use same variable name...sue me
+    # interview date, which was originally v1_date for hcpd, has been renamed in line above, headerv2
+    try:
+        studydata['nb_months'] = (
+                12 * (pd.to_datetime(studydata['interview_date']).dt.year - pd.to_datetime(studydata.dob).dt.year) +
+                (pd.to_datetime(studydata['interview_date']).dt.month - pd.to_datetime(studydata.dob).dt.month) +
+                (pd.to_datetime(studydata['interview_date']).dt.day - pd.to_datetime(studydata.dob).dt.day) / 31)
+        studydatasub = studydata.loc[studydata.nb_months.isnull()].copy()
+        studydatasuper = studydata.loc[~(studydata.nb_months.isnull())].copy()
+        studydatasuper['nb_months'] = studydatasuper['nb_months'].apply(np.floor).astype(int)
+        studydatasuper['nb_monthsPHI'] = studydatasuper['nb_months']
+        studydatasuper.loc[studydatasuper.nb_months > 1080, 'nb_monthsPHI'] = 1200
+        studydata = pd.concat([studydatasub, studydatasuper], sort=True)
+        studydata = studydata.drop(columns={'nb_months'}).rename(columns={'nb_monthsPHI': 'interview_age'})
+    except:
+        pass
+    # convert gender to M/F string
+    try:
+        studydata.gender = studydata.gender.str.replace('1', 'M')
+        studydata.gender = studydata.gender.str.replace('2', 'F')
+    except:
+        print(study + ' has no variable named gender')
+    return studydata
+
+
+def extraheightcleanvar(dfnewchildold):
+    dfnewchild = dfnewchildold.copy()
+    dfnewchild.groupby('height').count()[0:50]
+    dfnewchild['heightorig'] = dfnewchild['height']
+    dfnewchild['height'] = dfnewchild['height'].str.lower().str.replace('"', "'")
+    dfnewchild['height'] = dfnewchild['height'].str.replace("''", "'")
+    dfnewchild.loc[dfnewchild['height'].str.contains('/') == True]
+    dfnewchild['height'] = dfnewchild['height'].str.replace("1/2", ".5")
+    dfnewchild['height'] = dfnewchild['height'].str.replace("ft'", "'")
+    dfnewchild['height'] = dfnewchild['height'].str.replace("ft", "'")
+    dfnewchild['height'] = dfnewchild['height'].str.replace("4,5'", "4'5'")
+    dfnewchild.groupby('weight').count()[0:50]
+    dfnewchild['weight'] = dfnewchild['weight'].str.replace('lbs', '')
+    dfnewchild['weight'] = dfnewchild['weight'].str.replace(' LBS', '')
+    dfnewchild['bpressure'] = dfnewchild['bpressure'].str.replace('_', '')
+    new = dfnewchild["height"].str.split("'", n=1, expand=True)
+    dfnewchild['heightfeet'] = new[0]
+    dfnewchild['heightinch'] = new[1].str.replace("'", "")
+    dfnewchild['heightinchnum'] = pd.to_numeric(dfnewchild.heightinch, errors='coerce')
+    dfnewchild['heightfeetnum'] = pd.to_numeric(dfnewchild.heightfeet, errors='coerce')
+    dfnewchild.loc[(dfnewchild.heightinchnum.isnull() == True) & (dfnewchild.height != ''), 'heightinchnum'] = 0
+    dfnewchild['totalheightinches'] = 12 * dfnewchild.heightfeetnum + dfnewchild.heightinchnum
+    # cleandata=dfnewchild.drop(columns=['height','heightorig','heightfeet', 'heightinch', 'heightinchnum', 'heightfeetnum']).copy()
+    cleandata = dfnewchild[['bpressure', 'dob', 'flagged', 'gender', 'interview_age',
+                            'interview_date', 'site', 'study', 'subject', 'subject_id', 'weight',
+                            'totalheightinches']].copy()
+    return cleandata
+
 
 box_temp = '/home/petra/UbWinSharedSpace1/boxtemp'
 box = LifespanBox(cache=box_temp)
@@ -348,184 +527,7 @@ else:
 
 ""
 
-
 ###notes for when the bloodsamples and labs come in for hcd (different than hca_
 # child	bld_hba1c = hcpd18	hba1c
 # hcpd18	bld_rucdr_saliva = child	rucdrsaliva
 # not requested: hcpd18	blood_notes, child	external_notes, and child	rucdrsaliva_note, and  hcpd18	salisaliva_collectdt
-
-
-def parent2child(studydata):
-    studydata = studydata.drop(columns={'parent_id', 'subject', 'flagged'}).rename(columns={'child_id': 'subject_id'})
-    new = studydata['subject_id'].str.split("_", 1, expand=True)
-    studydata['subject'] = new[0].str.strip()
-    studydata['flagged'] = new[1].str.strip()
-    return studydata
-
-
-def Box2dataframe(curated_fileid_start):  # ,study,site,datatype,boxsnapshotfolderid,boxsnapshotQCfolderid):
-    # get current best curated data from BOX and read into pandas dataframe for QC
-    raw_fileid = curated_fileid_start
-    rawobject = box.download_file(raw_fileid)
-    data_path = os.path.join(cache_space, rawobject.get().name)
-    raw = pd.read_csv(data_path, header=0, low_memory=False, encoding='ISO-8859-1')
-    return raw
-
-
-def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa', dframe=None):
-    """
-    Takes list of vars from the crosswalk, gets the data from Redcap, and puts into structure format after
-    merging with NDAR requiredvars.  Outputs a csv structure in NDA format to pathstructureout location
-    """
-    if dframe is not None:
-        studydata = dframe
-    else:
-        studydata = getredcapfieldsjson(fieldlist=vars, study=studystr)
-    # get the relevant rows of the crosswalk
-    # inner merge works for redcap source..need right merge for box, though, to get extra vars for missing people
-    crosswalk_subset = \
-    pd.merge(crosswalk, pd.DataFrame(vars, columns=['HCP-D Element']), on='HCP-D Element', how='inner')[
-        ['NDA Structure', 'NDA Element', 'HCP-D Element', 'HCP-D Source',
-         'CCF action requested',
-         'HCP-D Element name in uploaded file',
-         'requested_python']]
-    # execute transformation codes stored in the crosswalk
-    for index, row in crosswalk_subset.iterrows():
-        if pd.isna(row['requested_python']):
-            pass
-        else:
-            exec(row['requested_python'])
-    # remove fields with empty values HCP-D Element name in uploaded file -- these are empty because NDA doesnt want them
-    crosswalk_subset = crosswalk_subset.loc[crosswalk_subset['HCP-D Element name in uploaded file'].isnull() == False]
-    listout = ['subject', 'flagged', 'interview_date', 'interview_age', 'gender'] + list(
-        crosswalk_subset['HCP-D Element name in uploaded file'])
-    # output new variables and subset to those not flagged for withdrawal.
-    transformed = studydata[listout].loc[studydata.flagged.isnull() == True].drop(
-        columns={'flagged', 'interview_date', 'gender', 'interview_age'})
-    # merge with required fields from vars in intradb staging (guid, etc)
-    # not sure whether it makes sense to pull these in here or recalculate on fly from redcap.
-    # future issues:  compare this approach (e.g. pull from the file above named 'ndar') vs. what happens in the applycrosswalk.py
-    # program for HCD, which regenerates on fly...will require some recodeing below to pull from redcap...
-    # might just be easier to pull once...but how will this affect visit numbers?
-    ndarsub = ndar[['nda_guid', 'subjectped', 'nda_gender', 'nda_interview_age', 'nda_interview_date']].rename(
-        columns={'nda_guid': 'subjectkey', 'subjectped': 'src_subject_id', 'nda_gender': 'gender',
-                 'nda_interview_date': 'interview_date', 'nda_interview_age': 'interview_age'}).copy()
-    dout = pd.merge(ndarsub, transformed, how='left', left_on='src_subject_id', right_on='subject').drop(
-        columns='subject')
-    dout['interview_date'] = pd.to_datetime(dout['interview_date']).dt.strftime('%m/%d/%Y')
-    # now export
-    crosswalk_subset.reset_index(inplace=True)
-    strucroot = crosswalk_subset['NDA Structure'].str.strip().str[:-2][0]
-    strucnum = crosswalk_subset['NDA Structure'].str.strip().str[-2:][0]
-    # finalsubset - i.e. no withdraws
-    # subjectkey	src_subject_id	interview_age	interview_date	gender
-    filePath = os.path.join(pathstructuresout, 'HCPD_' + strucroot + strucnum + '_' + snapshotdate + '.csv')
-    if os.path.exists(filePath):
-        os.remove(filePath)
-    else:
-        pass
-        # print("Can not delete the file as it doesn't exists")
-
-    with open(filePath, 'a') as f:
-        f.write(strucroot + "," + str(int(strucnum)) + "\n")
-        dout.to_csv(f, index=False)
-
-
-# use json format because otherwise commas in strings convert wrong in csv read
-def getredcapfieldsjson(fieldlist, study='hcpdparent '):  # , token=token[0],field=field[0],event=event[0]):
-    """
-    Downloads requested fields from Redcap databases specified by details in redcapconfig file
-    Returns panda dataframe with fields 'study', 'Subject_ID, 'subject', and 'flagged', where 'Subject_ID' is the
-    patient id in the database of interest (sometimes called subject_id, parent_id) as well as requested fields.
-    subject is this same id stripped of underscores or flags like 'excluded' to make it easier to merge
-    flagged contains the extra characters other than the id so you can keep track of who should NOT be uploaded to NDA
-    or elsewwhere shared
-    """
-    auth = pd.read_csv(redcapconfigfile)
-    studydata = pd.DataFrame()
-    fieldlistlabel = ['fields[' + str(i) + ']' for i in range(5, len(fieldlist) + 5)]
-    fieldrow = dict(zip(fieldlistlabel, fieldlist))
-    d1 = {'token': auth.loc[auth.study == study, 'token'].values[0], 'content': 'record', 'format': 'json',
-          'type': 'flat',
-          'fields[0]': auth.loc[auth.study == study, 'field'].values[0],
-          'fields[1]': auth.loc[auth.study == study, 'interview_date'].values[0],
-          'fields[2]': auth.loc[auth.study == study, 'sexatbirth'].values[0],
-          'fields[3]': auth.loc[auth.study == study, 'sitenum'].values[0],
-          'fields[4]': auth.loc[auth.study == study, 'dobvar'].values[0]}
-    d2 = fieldrow
-    d3 = {'events[0]': auth.loc[auth.study == study, 'event'].values[0], 'rawOrLabel': 'raw',
-          'rawOrLabelHeaders': 'raw',
-          'exportCheckboxLabel': 'false',
-          'exportSurveyFields': 'false', 'exportDataAccessGroups': 'false', 'returnFormat': 'json'}
-    data = {**d1, **d2, **d3}
-    buf = BytesIO()
-    ch = pycurl.Curl()
-    ch.setopt(ch.URL, 'https://redcap.wustl.edu/redcap/srvrs/prod_v3_1_0_001/redcap/api/')
-    ch.setopt(ch.HTTPPOST, list(data.items()))
-    ch.setopt(ch.WRITEDATA, buf)
-    ch.perform()
-    ch.close()
-    htmlString = buf.getvalue().decode('UTF-8')
-    buf.close()
-    d = json.loads(htmlString)
-    pexpanded = pd.DataFrame(d)
-    pexpanded = pexpanded.loc[~(pexpanded[auth.loc[auth.study == study, 'field'].values[0]] == '')]  ##
-    new = pexpanded[auth.loc[auth.study == study, 'field'].values[0]].str.split("_", 1, expand=True)
-    pexpanded['subject'] = new[0].str.strip()
-    pexpanded['flagged'] = new[1].str.strip()
-    pexpanded['study'] = study  # auth.study[i]
-    studydata = pd.concat([studydata, pexpanded], axis=0, sort=True)
-    studydata = studydata.rename(columns={auth.loc[auth.study == study, 'interview_date'].values[0]: 'interview_date'})
-    # Convert age in years to age in months
-    # note that dob is hardcoded var name here because all redcap databases use same variable name...sue me
-    # interview date, which was originally v1_date for hcpd, has been renamed in line above, headerv2
-    try:
-        studydata['nb_months'] = (
-                12 * (pd.to_datetime(studydata['interview_date']).dt.year - pd.to_datetime(studydata.dob).dt.year) +
-                (pd.to_datetime(studydata['interview_date']).dt.month - pd.to_datetime(studydata.dob).dt.month) +
-                (pd.to_datetime(studydata['interview_date']).dt.day - pd.to_datetime(studydata.dob).dt.day) / 31)
-        studydatasub = studydata.loc[studydata.nb_months.isnull()].copy()
-        studydatasuper = studydata.loc[~(studydata.nb_months.isnull())].copy()
-        studydatasuper['nb_months'] = studydatasuper['nb_months'].apply(np.floor).astype(int)
-        studydatasuper['nb_monthsPHI'] = studydatasuper['nb_months']
-        studydatasuper.loc[studydatasuper.nb_months > 1080, 'nb_monthsPHI'] = 1200
-        studydata = pd.concat([studydatasub, studydatasuper], sort=True)
-        studydata = studydata.drop(columns={'nb_months'}).rename(columns={'nb_monthsPHI': 'interview_age'})
-    except:
-        pass
-    # convert gender to M/F string
-    try:
-        studydata.gender = studydata.gender.str.replace('1', 'M')
-        studydata.gender = studydata.gender.str.replace('2', 'F')
-    except:
-        print(study + ' has no variable named gender')
-    return studydata
-
-
-def extraheightcleanvar(dfnewchildold):
-    dfnewchild = dfnewchildold.copy()
-    dfnewchild.groupby('height').count()[0:50]
-    dfnewchild['heightorig'] = dfnewchild['height']
-    dfnewchild['height'] = dfnewchild['height'].str.lower().str.replace('"', "'")
-    dfnewchild['height'] = dfnewchild['height'].str.replace("''", "'")
-    dfnewchild.loc[dfnewchild['height'].str.contains('/') == True]
-    dfnewchild['height'] = dfnewchild['height'].str.replace("1/2", ".5")
-    dfnewchild['height'] = dfnewchild['height'].str.replace("ft'", "'")
-    dfnewchild['height'] = dfnewchild['height'].str.replace("ft", "'")
-    dfnewchild['height'] = dfnewchild['height'].str.replace("4,5'", "4'5'")
-    dfnewchild.groupby('weight').count()[0:50]
-    dfnewchild['weight'] = dfnewchild['weight'].str.replace('lbs', '')
-    dfnewchild['weight'] = dfnewchild['weight'].str.replace(' LBS', '')
-    dfnewchild['bpressure'] = dfnewchild['bpressure'].str.replace('_', '')
-    new = dfnewchild["height"].str.split("'", n=1, expand=True)
-    dfnewchild['heightfeet'] = new[0]
-    dfnewchild['heightinch'] = new[1].str.replace("'", "")
-    dfnewchild['heightinchnum'] = pd.to_numeric(dfnewchild.heightinch, errors='coerce')
-    dfnewchild['heightfeetnum'] = pd.to_numeric(dfnewchild.heightfeet, errors='coerce')
-    dfnewchild.loc[(dfnewchild.heightinchnum.isnull() == True) & (dfnewchild.height != ''), 'heightinchnum'] = 0
-    dfnewchild['totalheightinches'] = 12 * dfnewchild.heightfeetnum + dfnewchild.heightinchnum
-    # cleandata=dfnewchild.drop(columns=['height','heightorig','heightfeet', 'heightinch', 'heightinchnum', 'heightfeetnum']).copy()
-    cleandata = dfnewchild[['bpressure', 'dob', 'flagged', 'gender', 'interview_age',
-                            'interview_date', 'site', 'study', 'subject', 'subject_id', 'weight',
-                            'totalheightinches']].copy()
-    return cleandata

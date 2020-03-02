@@ -13,7 +13,7 @@ def parent2child(studydata):
     studydata = studydata \
         .drop(columns={'parent_id', 'subject', 'flagged'}) \
         .rename(columns={'child_id': 'subject_id'})
-    new = studydata['subject_id'].str.split("_", 1, expand=True)
+    new = studydata.subject_id.str.split("_", 1, expand=True)
     studydata['subject'] = new[0].str.strip()
     studydata['flagged'] = new[1].str.strip()
     return studydata
@@ -42,10 +42,10 @@ def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa'
              'requested_python']]
     # execute transformation codes stored in the crosswalk
     for index, row in crosswalk_subset.iterrows():
-        if pd.isna(row['requested_python']):
+        if pd.isna(row.requested_python):
             pass
         else:
-            exec(row['requested_python'])
+            exec(row.requested_python)
     # remove fields with empty values hcp_variable name in uploaded file -- these are empty because NDA doesnt want them
     crosswalk_subset = crosswalk_subset.loc[crosswalk_subset['hcp_variable name in uploaded file'].isnull() == False]
     listout = ['subject', 'flagged', 'interview_date', 'interview_age', 'gender'] + list(
@@ -63,11 +63,11 @@ def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa'
                  'nda_interview_date': 'interview_date', 'nda_interview_age': 'interview_age'}).copy()
     dout = pd.merge(ndarsub, transformed, how='left', left_on='src_subject_id', right_on='subject').drop(
         columns='subject')
-    dout['interview_date'] = pd.to_datetime(dout['interview_date']).dt.strftime('%m/%d/%Y')
+    dout['interview_date'] = pd.to_datetime(dout.interview_date).dt.strftime('%m/%d/%Y')
     # now export
     crosswalk_subset.reset_index(inplace=True)
-    strucroot = crosswalk_subset['nda_structure'].str.strip().str[:-2][0]
-    strucnum = crosswalk_subset['nda_structure'].str.strip().str[-2:][0]
+    strucroot = crosswalk_subset.nda_structure.str.strip().str[:-2][0]
+    strucnum = crosswalk_subset.nda_structure.str.strip().str[-2:][0]
     # finalsubset - i.e. no withdraws
     # subjectkey	src_subject_id	interview_age	interview_date	gender
     filePath = os.path.join(pathstructuresout, 'HCPD_' + strucroot + strucnum + '_' + snapshotdate + '.csv')
@@ -132,13 +132,13 @@ def getredcapfieldsjson(fieldlist, study):  # , token=token[0],field=field[0],ev
     # interview date, which was originally v1_date for hcpd, has been renamed in line above, headerv2
     try:
         studydata['nb_months'] = (
-                12 * (pd.to_datetime(studydata['interview_date']).dt.year - pd.to_datetime(studydata.dob).dt.year) +
-                (pd.to_datetime(studydata['interview_date']).dt.month - pd.to_datetime(studydata.dob).dt.month) +
-                (pd.to_datetime(studydata['interview_date']).dt.day - pd.to_datetime(studydata.dob).dt.day) / 31)
+                12 * (pd.to_datetime(studydata.interview_date).dt.year - pd.to_datetime(studydata.dob).dt.year) +
+                (pd.to_datetime(studydata.interview_date).dt.month - pd.to_datetime(studydata.dob).dt.month) +
+                (pd.to_datetime(studydata.interview_date).dt.day - pd.to_datetime(studydata.dob).dt.day) / 31)
         studydatasub = studydata.loc[studydata.nb_months.isnull()].copy()
         studydatasuper = studydata.loc[~(studydata.nb_months.isnull())].copy()
-        studydatasuper['nb_months'] = studydatasuper['nb_months'].apply(np.floor).astype(int)
-        studydatasuper['nb_monthsPHI'] = studydatasuper['nb_months']
+        studydatasuper['nb_months'] = studydatasuper.nb_months.apply(np.floor).astype(int)
+        studydatasuper['nb_monthsPHI'] = studydatasuper.nb_months
         studydatasuper.loc[studydatasuper.nb_months > 1080, 'nb_monthsPHI'] = 1200
         studydata = pd.concat([studydatasub, studydatasuper], sort=True)
         studydata = studydata.drop(columns={'nb_months'}).rename(columns={'nb_monthsPHI': 'interview_age'})
@@ -156,19 +156,19 @@ def getredcapfieldsjson(fieldlist, study):  # , token=token[0],field=field[0],ev
 def extraheightcleanvar(dfnewchildold):
     dfnewchild = dfnewchildold.copy()
     dfnewchild.groupby('height').count()[0:50]
-    dfnewchild['heightorig'] = dfnewchild['height']
-    dfnewchild['height'] = dfnewchild['height'].str.lower().str.replace('"', "'")
-    dfnewchild['height'] = dfnewchild['height'].str.replace("''", "'")
-    dfnewchild.loc[dfnewchild['height'].str.contains('/') == True]
-    dfnewchild['height'] = dfnewchild['height'].str.replace("1/2", ".5")
-    dfnewchild['height'] = dfnewchild['height'].str.replace("ft'", "'")
-    dfnewchild['height'] = dfnewchild['height'].str.replace("ft", "'")
-    dfnewchild['height'] = dfnewchild['height'].str.replace("4,5'", "4'5'")
+    dfnewchild['heightorig'] = dfnewchild.height
+    dfnewchild.height = dfnewchild.height.str.lower().str.replace('"', "'")
+    dfnewchild.height = dfnewchild.height.str.replace("''", "'")
+    dfnewchild.loc[dfnewchild.height.str.contains('/') == True]
+    dfnewchild.height = dfnewchild.height.str.replace("1/2", ".5")
+    dfnewchild.height = dfnewchild.height.str.replace("ft'", "'")
+    dfnewchild.height = dfnewchild.height.str.replace("ft", "'")
+    dfnewchild.height = dfnewchild.height.str.replace("4,5'", "4'5'")
     dfnewchild.groupby('weight').count()[0:50]
-    dfnewchild['weight'] = dfnewchild['weight'].str.replace('lbs', '')
-    dfnewchild['weight'] = dfnewchild['weight'].str.replace(' LBS', '')
-    dfnewchild['bpressure'] = dfnewchild['bpressure'].str.replace('_', '')
-    new = dfnewchild["height"].str.split("'", n=1, expand=True)
+    dfnewchild.weight = dfnewchild.weight.str.replace('lbs', '')
+    dfnewchild.weight = dfnewchild.weight.str.replace(' LBS', '')
+    dfnewchild.bpressure = dfnewchild.bpressure.str.replace('_', '')
+    new = dfnewchild.height.str.split("'", n=1, expand=True)
     dfnewchild['heightfeet'] = new[0]
     dfnewchild['heightinch'] = new[1].str.replace("'", "")
     dfnewchild['heightinchnum'] = pd.to_numeric(dfnewchild.heightinch, errors='coerce')
@@ -225,12 +225,12 @@ crosswalk.loc[crosswalk.dbasestring.str.contains('hcp'), 'countdb'] = crosswalk.
 
 normals
 
-for structure in normals['nda_structure']:
-    elements = crosswalk.loc[crosswalk['nda_structure'] == structure][['hcp_variable']]
-    vars = list(elements['hcp_variable'])
-    numstudies = crosswalk.loc[crosswalk['nda_structure'] == structure, 'countdb'].values[0]
+for structure in normals.nda_structure:
+    elements = crosswalk.loc[crosswalk.nda_structure == structure][['hcp_variable']]
+    vars = list(elements.hcp_variable)
+    numstudies = crosswalk.loc[crosswalk.nda_structure == structure, 'countdb'].values[0]
     if numstudies == 1.0:
-        study = crosswalk.loc[crosswalk['nda_structure'] == structure, 'dbase'].values[0]
+        study = crosswalk.loc[crosswalk.nda_structure == structure, 'dbase'].values[0]
         if study == 'hcpdparent':
             varsnew = ['child_id'] + vars
             studydata = getredcapfieldsjson(fieldlist=varsnew, study='hcpdparent')
@@ -239,7 +239,7 @@ for structure in normals['nda_structure']:
             studydata = getredcapfieldsjson(fieldlist=vars, study=study)
     if numstudies == 2.0:
         allstudydata = pd.DataFrame()
-        studies = crosswalk.loc[crosswalk['nda_structure'] == structure, 'dbase'].values[0]
+        studies = crosswalk.loc[crosswalk.nda_structure == structure, 'dbase'].values[0]
         for pop in studies.split():
             studydata = pd.DataFrame()
             if pop == 'hcpdparent':
@@ -253,7 +253,7 @@ for structure in normals['nda_structure']:
     # exceptions - no deviation from concat, but python snp too long to paste in column
     if structure == 'vitals01':
         studydata_v2 = extraheightcleanvar(studydata)
-        studydata_v2['height'] = studydata_v2.totalheightinches
+        studydata_v2.height = studydata_v2.totalheightinches
         studydata = studydata_v2.copy()
     redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpd', dframe=studydata)
 
@@ -262,11 +262,11 @@ for structure in normals['nda_structure']:
 #########   fenvs01 ##########################################
 # fenvs01 requires a merge after two independent cats
 # get vars from the hcpdchild and hcpd18 database
-elements = crosswalk.loc[crosswalk['nda_structure'] == 'fenvs01'][['hcp_variable', 'specialty_code']]
+elements = crosswalk.loc[crosswalk.nda_structure == 'fenvs01'][['hcp_variable', 'specialty_code']]
 elementscat = elements.loc[elements.specialty_code != '2']
-varscat = list(elementscat['hcp_variable'])
+varscat = list(elementscat.hcp_variable)
 allstudydata = pd.DataFrame()
-studies = crosswalk.loc[(crosswalk['nda_structure'] == 'fenvs01') & (crosswalk.specialty_code == '1'), 'dbase'].values[
+studies = crosswalk.loc[(crosswalk.nda_structure == 'fenvs01') & (crosswalk.specialty_code == '1'), 'dbase'].values[
     0]
 # get and concatenate the frist set of fenvs vars associated with
 for pop in studies.split():
@@ -277,9 +277,9 @@ studydata = allstudydata
 
 # get vars from the hcpd18 and hcpdparent databases
 elementscat2 = elements.loc[elements.specialty_code == '2']
-varscat2 = list(elementscat2['hcp_variable'])
+varscat2 = list(elementscat2.hcp_variable)
 allstudydata2 = pd.DataFrame()
-studies2 = crosswalk.loc[(crosswalk['nda_structure'] == 'fenvs01') & (crosswalk.specialty_code == '2'), 'dbase'].values[
+studies2 = crosswalk.loc[(crosswalk.nda_structure == 'fenvs01') & (crosswalk.specialty_code == '2'), 'dbase'].values[
     0]
 # get and concatenate the frist set of fenvs vars associated with
 for pop in studies2.split():
@@ -327,7 +327,7 @@ studydata2['fpnh_dad'] = studydata2.fpnh_dad___1.astype(str) + studydata2.fpnh_d
                          + studydata2.fpnh_dad___7.astype(str) + studydata2.fpnh_dad___8.astype(str) \
                          + studydata2.fpnh_dad___9.astype(str)
 
-studydata2['fpnh_dad'] = studydata2['fpnh_dad'].str[:-2]
+studydata2['fpnh_dad'] = studydata2.fpnh_dad.str[:-2]
 
 # mom
 studydata2.loc[studydata2.fpnh_mom___1.astype(str) == '1', 'fpnh_mom___1'] = "Schizophrenia or Psychosis;"
@@ -356,7 +356,7 @@ studydata2['fpnh_mom'] = studydata2.fpnh_mom___1.astype(str) + studydata2.fpnh_m
                          + studydata2.fpnh_mom___7.astype(str) + studydata2.fpnh_mom___8.astype(str) \
                          + studydata2.fpnh_mom___9.astype(str)
 
-studydata2['fpnh_mom'] = studydata2['fpnh_mom'].str[:-2]
+studydata2['fpnh_mom'] = studydata2.fpnh_mom.str[:-2]
 
 # merge them check issues
 studydata2gether = pd.merge(studydata, studydata2[['subject', 'fpnh_dad', 'fpnh_mom']], how='outer', on='subject',
@@ -379,8 +379,8 @@ extrasc = getredcapfieldsjson(fieldlist=[], study='hcpdchild')
 extras18 = getredcapfieldsjson(fieldlist=[], study='hcpd18')
 extras = pd.concat([extrasc, extras18], axis=0)
 
-crosswalk_subset = crosswalk.loc[(crosswalk['source'].str.contains('Box'))
-                                 & (crosswalk['source'].str.contains('PennCNP'))]
+crosswalk_subset = crosswalk.loc[(crosswalk.source.str.contains('Box'))
+                                 & (crosswalk.source.str.contains('PennCNP'))]
 
 pennid = crosswalk_subset.dbase.unique()[0]
 penn = Box2dataframe(pennid)
@@ -388,17 +388,17 @@ penn = penn.loc[penn.assessment == 'V1']
 
 # execute any specialty codes
 for index, row in crosswalk_subset.iterrows():
-    if pd.isna(row['requested_python']):
+    if pd.isna(row.requested_python):
         pass
     else:
-        exec(row['requested_python'])
+        exec(row.requested_python)
 
 # create the two penncnp stuctures
 structuresbox = crosswalk_subset.drop_duplicates(subset='nda_structure')[
     ['source', 'dbase', 'nda_structure', 'specialty_code']]
-for structure in structuresbox['nda_structure']:
+for structure in structuresbox.nda_structure:
     listvars = crosswalk_subset.loc[
-        crosswalk_subset['nda_structure'] == structure, 'hcp_variable name in uploaded file'].tolist()
+        crosswalk_subset.nda_structure == structure, 'hcp_variable name in uploaded file'].tolist()
     pennstruct = penn[['subid'] + listvars]
     studydata = pd.merge(pennstruct, extras, left_on='subid', right_on='subject', how='right')
     transformed = studydata.loc[studydata.flagged.isnull() == True].drop(columns='flagged')
@@ -408,10 +408,10 @@ for structure in structuresbox['nda_structure']:
         columns={'nda_guid': 'subjectkey', 'subjectped': 'src_subject_id'}).copy()
     dout = pd.merge(ndarsub, transformed, how='left', left_on='src_subject_id', right_on='subject').drop(
         columns={'subject', 'dob', 'site', 'study', 'subject_id'})
-    crosswalk_boxsubset = crosswalk_subset.loc[crosswalk_subset['nda_structure'] == structure]
+    crosswalk_boxsubset = crosswalk_subset.loc[crosswalk_subset.nda_structure == structure]
     crosswalk_boxsubset.reset_index(inplace=True)
-    strucroot = crosswalk_boxsubset['nda_structure'].str.strip().str[:-2][0]
-    strucnum = crosswalk_boxsubset['nda_structure'].str.strip().str[-2:][0]
+    strucroot = crosswalk_boxsubset.nda_structure.str.strip().str[:-2][0]
+    strucnum = crosswalk_boxsubset.nda_structure.str.strip().str[-2:][0]
     filePath = os.path.join(pathout, 'HCPD_' + strucroot + strucnum + '_' + snapshotdate + '.csv')
     if os.path.exists(filePath):
         os.remove(filePath)
@@ -427,8 +427,8 @@ for structure in structuresbox['nda_structure']:
 # WISC,WPPSI,WAIS
 # use extras from penn special case
 for w in ['WISC', 'WPPSI', 'WAIS']:
-    crosswalk_subset = crosswalk.loc[(crosswalk['source'].str.contains('Box'))
-                                     & (crosswalk['source'].str.contains(w))]
+    crosswalk_subset = crosswalk.loc[(crosswalk.source.str.contains('Box'))
+                                     & (crosswalk.source.str.contains(w))]
     wid = crosswalk_subset.dbase.unique()[0]
     wisc = Box2dataframe(wid)
     wisc = wisc.loc[wisc.visit == 'V1']
@@ -443,8 +443,8 @@ for w in ['WISC', 'WPPSI', 'WAIS']:
     dout = pd.merge(ndarsub, transformed, how='left', left_on='src_subject_id', right_on='subject').drop(
         columns={'subject', 'dob', 'site', 'study', 'subject_id'})
     crosswalk_subset.reset_index(inplace=True)
-    strucroot = crosswalk_subset['nda_structure'].str.strip().str[:-2][0]
-    strucnum = crosswalk_subset['nda_structure'].str.strip().str[-2:][0]
+    strucroot = crosswalk_subset.nda_structure.str.strip().str[:-2][0]
+    strucnum = crosswalk_subset.nda_structure.str.strip().str[-2:][0]
     filePath = os.path.join(pathout, 'HCPD_' + strucroot + strucnum + '_' + snapshotdate + '.csv')
     if os.path.exists(filePath):
         os.remove(filePath)
@@ -459,15 +459,15 @@ for w in ['WISC', 'WPPSI', 'WAIS']:
 # caffeine nicotine and other drug sessions
 # need six rows per person corresponding to 6 sessions
 # +
-crosswalk_subset = crosswalk.loc[crosswalk['nda_structure'] == 'drugscr01']
+crosswalk_subset = crosswalk.loc[crosswalk.nda_structure == 'drugscr01']
 sessions = ['1', '2', '3', '4', '5', '6']
-renamelist = crosswalk_subset.loc[(crosswalk_subset['hcp_variable'].str.contains('s1') == True) |
-                                  (crosswalk_subset['hcp_variable'].str.contains(
+renamelist = crosswalk_subset.loc[(crosswalk_subset.hcp_variable.str.contains('s1') == True) |
+                                  (crosswalk_subset.hcp_variable.str.contains(
                                       'drug1') == True), 'hcp_variable'].tolist() + ['alc_breath1']
 allsessions = pd.DataFrame()
 for session in sessions:
-    slist = crosswalk_subset.loc[(crosswalk_subset['hcp_variable'].str.contains('s' + session) == True) |
-                                 (crosswalk_subset['hcp_variable'].str.contains(
+    slist = crosswalk_subset.loc[(crosswalk_subset.hcp_variable.str.contains('s' + session) == True) |
+                                 (crosswalk_subset.hcp_variable.str.contains(
                                      'drug' + session) == True), 'hcp_variable'].tolist() + ['alc_breath' + session]
     allstudydata = pd.DataFrame()
     studies = crosswalk_subset.dbase.values[0]
@@ -512,11 +512,11 @@ ndarsub = ndar[['nda_guid', 'subjectped', 'nda_gender', 'nda_interview_age', 'nd
     columns={'nda_guid': 'subjectkey', 'subjectped': 'src_subject_id', 'nda_gender': 'gender',
              'nda_interview_date': 'interview_date', 'nda_interview_age': 'interview_age'}).copy()
 dout = pd.merge(ndarsub, transformed, how='left', left_on='src_subject_id', right_on='subject').drop(columns='subject')
-dout['interview_date'] = pd.to_datetime(dout['interview_date']).dt.strftime('%m/%d/%Y')
+dout['interview_date'] = pd.to_datetime(dout.interview_date).dt.strftime('%m/%d/%Y')
 # now export
 crosswalk_subset.reset_index(inplace=True)
-strucroot = crosswalk_subset['nda_structure'].str.strip().str[:-2][0]
-strucnum = crosswalk_subset['nda_structure'].str.strip().str[-2:][0]
+strucroot = crosswalk_subset.nda_structure.str.strip().str[:-2][0]
+strucnum = crosswalk_subset.nda_structure.str.strip().str[-2:][0]
 # finalsubset - i.e. no withdraws
 # subjectkey	src_subject_id	interview_age	interview_date	gender
 filePath = os.path.join(pathout, 'HCPD_' + strucroot + strucnum + '_' + snapshotdate + '.csv')

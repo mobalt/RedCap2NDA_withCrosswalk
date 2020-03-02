@@ -226,8 +226,7 @@ crosswalk.loc[crosswalk.dbasestring.str.contains('hcp'), 'countdb'] = crosswalk.
 normals
 
 for structure in normals.nda_structure:
-    elements = crosswalk[crosswalk.nda_structure == structure][['hcp_variable']]
-    vars = list(elements.hcp_variable)
+    vars = crosswalk[crosswalk.nda_structure == structure].hcp_variable.tolist()
     numstudies = crosswalk.loc[crosswalk.nda_structure == structure, 'countdb'].values[0]
     if numstudies == 1.0:
         study = crosswalk.loc[crosswalk.nda_structure == structure, 'dbase'].values[0]

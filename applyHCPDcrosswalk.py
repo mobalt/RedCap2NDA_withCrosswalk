@@ -47,11 +47,11 @@ def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa'
         else:
             exec(row.requested_python)
     # remove fields with empty values hcp_variable name in uploaded file -- these are empty because NDA doesnt want them
-    crosswalk_subset = crosswalk_subset.loc[crosswalk_subset['hcp_variable name in uploaded file'].notna()]
+    crosswalk_subset = crosswalk_subset[crosswalk_subset['hcp_variable name in uploaded file'].notna()]
     listout = ['subject', 'flagged', 'interview_date', 'interview_age', 'gender'] + list(
         crosswalk_subset['hcp_variable name in uploaded file'])
     # output new variables and subset to those not flagged for withdrawal.
-    transformed = studydata[listout].loc[studydata.flagged.isnull()].drop(
+    transformed = studydata[listout][studydata.flagged.isnull()].drop(
         columns={'flagged', 'interview_date', 'gender', 'interview_age'})
     # merge with required fields from vars in intradb staging (guid, etc)
     # not sure whether it makes sense to pull these in here or recalculate on fly from redcap.
@@ -120,7 +120,7 @@ def getredcapfieldsjson(fieldlist, study):  # , token=token[0],field=field[0],ev
     buf.close()
     d = json.loads(htmlString)
     pexpanded = pd.DataFrame(d)
-    pexpanded = pexpanded.loc[~(pexpanded[auth.loc[auth.study == study, 'field'].values[0]] == '')]  ##
+    pexpanded = pexpanded.loc[pexpanded[auth.loc[auth.study == study, 'field'].values[0]] != '']  ##
     new = pexpanded[auth.loc[auth.study == study, 'field'].values[0]].str.split("_", 1, expand=True)
     pexpanded['subject'] = new[0].str.strip()
     pexpanded['flagged'] = new[1].str.strip()
@@ -135,8 +135,8 @@ def getredcapfieldsjson(fieldlist, study):  # , token=token[0],field=field[0],ev
                 12 * (pd.to_datetime(studydata.interview_date).dt.year - pd.to_datetime(studydata.dob).dt.year) +
                 (pd.to_datetime(studydata.interview_date).dt.month - pd.to_datetime(studydata.dob).dt.month) +
                 (pd.to_datetime(studydata.interview_date).dt.day - pd.to_datetime(studydata.dob).dt.day) / 31)
-        studydatasub = studydata.loc[studydata.nb_months.isnull()].copy()
-        studydatasuper = studydata.loc[studydata.nb_months.notna()].copy()
+        studydatasub = studydata[studydata.nb_months.isnull()].copy()
+        studydatasuper = studydata[studydata.nb_months.notna()].copy()
         studydatasuper['nb_months'] = studydatasuper.nb_months.apply(np.floor).astype(int)
         studydatasuper['nb_monthsPHI'] = studydatasuper.nb_months
         studydatasuper.loc[studydatasuper.nb_months > 1080, 'nb_monthsPHI'] = 1200
@@ -159,7 +159,7 @@ def extraheightcleanvar(dfnewchildold):
     dfnewchild['heightorig'] = dfnewchild.height
     dfnewchild.height = dfnewchild.height.str.lower().str.replace('"', "'")
     dfnewchild.height = dfnewchild.height.str.replace("''", "'")
-    dfnewchild.loc[dfnewchild.height.str.contains('/') == True]
+    dfnewchild[dfnewchild.height.str.contains('/') == True]
     dfnewchild.height = dfnewchild.height.str.replace("1/2", ".5")
     dfnewchild.height = dfnewchild.height.str.replace("ft'", "'")
     dfnewchild.height = dfnewchild.height.str.replace("ft", "'")
@@ -226,7 +226,7 @@ crosswalk.loc[crosswalk.dbasestring.str.contains('hcp'), 'countdb'] = crosswalk.
 normals
 
 for structure in normals.nda_structure:
-    elements = crosswalk.loc[crosswalk.nda_structure == structure][['hcp_variable']]
+    elements = crosswalk[crosswalk.nda_structure == structure][['hcp_variable']]
     vars = list(elements.hcp_variable)
     numstudies = crosswalk.loc[crosswalk.nda_structure == structure, 'countdb'].values[0]
     if numstudies == 1.0:
@@ -262,8 +262,8 @@ for structure in normals.nda_structure:
 #########   fenvs01 ##########################################
 # fenvs01 requires a merge after two independent cats
 # get vars from the hcpdchild and hcpd18 database
-elements = crosswalk.loc[crosswalk.nda_structure == 'fenvs01'][['hcp_variable', 'specialty_code']]
-elementscat = elements.loc[elements.specialty_code != '2']
+elements = crosswalk[crosswalk.nda_structure == 'fenvs01'][['hcp_variable', 'specialty_code']]
+elementscat = elements[elements.specialty_code != '2']
 varscat = list(elementscat.hcp_variable)
 allstudydata = pd.DataFrame()
 studies = crosswalk.loc[(crosswalk.nda_structure == 'fenvs01') & (crosswalk.specialty_code == '1'), 'dbase'].values[
@@ -276,7 +276,7 @@ for pop in studies.split():
 studydata = allstudydata
 
 # get vars from the hcpd18 and hcpdparent databases
-elementscat2 = elements.loc[elements.specialty_code == '2']
+elementscat2 = elements[elements.specialty_code == '2']
 varscat2 = list(elementscat2.hcp_variable)
 allstudydata2 = pd.DataFrame()
 studies2 = crosswalk.loc[(crosswalk.nda_structure == 'fenvs01') & (crosswalk.specialty_code == '2'), 'dbase'].values[
@@ -294,9 +294,9 @@ for pop in studies2.split():
 studydata2 = allstudydata2
 studydata2['fpnh_dad_count'] = studydata2.filter(regex="fpnh_dad___").astype(float).sum(axis=1)
 studydata2['fpnh_mom_count'] = studydata2.filter(regex="fpnh_mom___").astype(float).sum(axis=1)
-studydata2.loc[(studydata2.fpnh_dad_count > 1) & (studydata2.fpnh_dad___9.astype(str) == '1')][
+studydata2[(studydata2.fpnh_dad_count > 1) & (studydata2.fpnh_dad___9.astype(str) == '1')][
     ['subject', 'site', 'subject_id', 'fpnh_dad_count', 'fpnh_mom_count']]
-studydata2.loc[(studydata2.fpnh_mom_count > 1) & (studydata2.fpnh_mom___9.astype(str) == '1')][
+studydata2[(studydata2.fpnh_mom_count > 1) & (studydata2.fpnh_mom___9.astype(str) == '1')][
     ['subject', 'site', 'subject_id', 'fpnh_dad_count', 'fpnh_mom_count']]
 
 # translate checklist codes to strings and append - this is ugly code.  please dont judge
@@ -362,7 +362,7 @@ studydata2['fpnh_mom'] = studydata2.fpnh_mom.str[:-2]
 studydata2gether = pd.merge(studydata, studydata2[['subject', 'fpnh_dad', 'fpnh_mom']], how='outer', on='subject',
                             indicator=True)
 # these two both withdrawn...inner merge okay
-studydata2gether.loc[studydata2gether._merge == 'left_only'][['subject', 'site']]
+studydata2gether[studydata2gether._merge == 'left_only'][['subject', 'site']]
 
 # inner merge
 studydata2gether = pd.merge(studydata, studydata2[['subject', 'fpnh_dad', 'fpnh_mom']], how='inner', on='subject')
@@ -379,12 +379,12 @@ extrasc = getredcapfieldsjson(fieldlist=[], study='hcpdchild')
 extras18 = getredcapfieldsjson(fieldlist=[], study='hcpd18')
 extras = pd.concat([extrasc, extras18], axis=0)
 
-crosswalk_subset = crosswalk.loc[(crosswalk.source.str.contains('Box'))
-                                 & (crosswalk.source.str.contains('PennCNP'))]
+crosswalk_subset = crosswalk[crosswalk.source.str.contains('Box')
+                                 & crosswalk.source.str.contains('PennCNP')]
 
 pennid = crosswalk_subset.dbase.unique()[0]
 penn = Box2dataframe(pennid)
-penn = penn.loc[penn.assessment == 'V1']
+penn = penn[penn.assessment == 'V1']
 
 # execute any specialty codes
 for index, row in crosswalk_subset.iterrows():
@@ -401,14 +401,14 @@ for structure in structuresbox.nda_structure:
         crosswalk_subset.nda_structure == structure, 'hcp_variable name in uploaded file'].tolist()
     pennstruct = penn[['subid'] + listvars]
     studydata = pd.merge(pennstruct, extras, left_on='subid', right_on='subject', how='right')
-    transformed = studydata.loc[studydata.flagged.isnull()].drop(columns='flagged')
+    transformed = studydata[studydata.flagged.isnull()].drop(columns='flagged')
     # merge with required fields from ndar subjects
     # --age and date need be recalcuated on fly from redcap data because possiblity of multiple dates per person'
     ndarsub = ndar[['nda_guid', 'subjectped']].rename(
         columns={'nda_guid': 'subjectkey', 'subjectped': 'src_subject_id'}).copy()
     dout = pd.merge(ndarsub, transformed, how='left', left_on='src_subject_id', right_on='subject').drop(
         columns={'subject', 'dob', 'site', 'study', 'subject_id'})
-    crosswalk_boxsubset = crosswalk_subset.loc[crosswalk_subset.nda_structure == structure]
+    crosswalk_boxsubset = crosswalk_subset[crosswalk_subset.nda_structure == structure]
     crosswalk_boxsubset.reset_index(inplace=True)
     strucroot = crosswalk_boxsubset.nda_structure.str.strip().str[:-2][0]
     strucnum = crosswalk_boxsubset.nda_structure.str.strip().str[-2:][0]
@@ -427,15 +427,15 @@ for structure in structuresbox.nda_structure:
 # WISC,WPPSI,WAIS
 # use extras from penn special case
 for w in ['WISC', 'WPPSI', 'WAIS']:
-    crosswalk_subset = crosswalk.loc[(crosswalk.source.str.contains('Box'))
-                                     & (crosswalk.source.str.contains(w))]
+    crosswalk_subset = crosswalk[crosswalk.source.str.contains('Box')
+                                     & crosswalk.source.str.contains(w)]
     wid = crosswalk_subset.dbase.unique()[0]
     wisc = Box2dataframe(wid)
-    wisc = wisc.loc[wisc.visit == 'V1']
+    wisc = wisc[wisc.visit == 'V1']
     listvars = crosswalk_subset['hcp_variable name in uploaded file'].tolist()
     wiscstruct = wisc[['subject'] + listvars]
     studydata = pd.merge(wiscstruct, extras, left_on='subject', right_on='subject', how='right')
-    transformed = studydata.loc[studydata.flagged.isnull()].drop(columns='flagged')
+    transformed = studydata[studydata.flagged.isnull()].drop(columns='flagged')
     # merge with required fields from ndar subjects
     # --age and date need be recalcuated on fly from redcap data because possiblity of multiple dates per person'
     ndarsub = ndar[['nda_guid', 'subjectped']].rename(
@@ -459,16 +459,16 @@ for w in ['WISC', 'WPPSI', 'WAIS']:
 # caffeine nicotine and other drug sessions
 # need six rows per person corresponding to 6 sessions
 # +
-crosswalk_subset = crosswalk.loc[crosswalk.nda_structure == 'drugscr01']
+crosswalk_subset = crosswalk[crosswalk.nda_structure == 'drugscr01']
 sessions = ['1', '2', '3', '4', '5', '6']
-renamelist = crosswalk_subset.loc[(crosswalk_subset.hcp_variable.str.contains('s1') == True) |
-                                  (crosswalk_subset.hcp_variable.str.contains(
-                                      'drug1') == True), 'hcp_variable'].tolist() + ['alc_breath1']
+renamelist = crosswalk_subset.loc[crosswalk_subset.hcp_variable.str.contains('s1') |
+                                  crosswalk_subset.hcp_variable.str.contains('drug1'),\
+                                  'hcp_variable'].tolist() + ['alc_breath1']
 allsessions = pd.DataFrame()
 for session in sessions:
-    slist = crosswalk_subset.loc[(crosswalk_subset.hcp_variable.str.contains('s' + session) == True) |
-                                 (crosswalk_subset.hcp_variable.str.contains(
-                                     'drug' + session) == True), 'hcp_variable'].tolist() + ['alc_breath' + session]
+    slist = crosswalk_subset.loc[crosswalk_subset.hcp_variable.str.contains('s' + session)  |
+                                 crosswalk_subset.hcp_variable.str.contains('drug' + session), 'hcp_variable']\
+        .tolist() + ['alc_breath' + session]
     allstudydata = pd.DataFrame()
     studies = crosswalk_subset.dbase.values[0]
     for pop in studies.split():
@@ -501,7 +501,7 @@ lout = list(crosswalk_subset['hcp_variable name in uploaded file'])
 cleanedlist = [x for x in lout if str(x) != 'nan']
 listout = ['subject', 'flagged', 'interview_date', 'interview_age',
            'gender'] + cleanedlist  # output new variables and subset to those not flagged for withdrawal.
-transformed = allsessions[listout].loc[allsessions.flagged.isnull()].drop(
+transformed = allsessions[listout][allsessions.flagged.isnull()].drop(
     columns={'flagged', 'interview_date', 'gender', 'interview_age'})
 # merge with required fields from vars in intradb staging (guid, etc)
 # not sure whether it makes sense to pull these in here or recalculate on fly from redcap.

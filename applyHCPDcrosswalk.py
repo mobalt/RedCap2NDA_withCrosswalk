@@ -33,13 +33,10 @@ def redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='
     else:
         studydata = get_behavioral(studystr, variables)
     # get the relevant rows of the crosswalk
-    # inner merge works for redcap source..need right merge for box, though, to get extra vars for missing people
-    crosswalk_subset = \
-        pd.merge(crosswalk, pd.DataFrame(variables, columns=['hcp_variable']), on='hcp_variable', how='inner')[
-            ['nda_structure', 'nda_element', 'hcp_variable', 'source',
-             'action_request',
-             'hcp_variable name in uploaded file',
-             'requested_python']]
+    crosswalk_subset = crosswalk[crosswalk.hcp_variable.isin(variables)]\
+        [['nda_structure', 'nda_element', 'hcp_variable', 'source',
+         'action_request', 'hcp_variable_upload', 'requested_python']]
+
     # execute transformation codes stored in the crosswalk
     for index, row in crosswalk_subset.iterrows():
         if pd.isna(row.requested_python):

@@ -1,3 +1,4 @@
+# +
 import datetime
 import json
 import os
@@ -5,9 +6,8 @@ from io import BytesIO
 
 import numpy as np
 import pandas as pd
-import pycurl
 from libs.box import LifespanBox
-
+from libs.config import LoadSettings
 
 def parent2child(studydata):
     studydata = studydata \
@@ -22,7 +22,7 @@ def parent2child(studydata):
 def Box2dataframe(curated_fileid_start):
     return box.Box2dataframe(curated_fileid_start)
 
-
+pathout = './pathout/'
 def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa', dframe=None):
     """
     Takes list of vars from the crosswalk, gets the data from Redcap, and puts into structure format after
@@ -83,7 +83,7 @@ def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa'
 
 
 # use json format because otherwise commas in strings convert wrong in csv read
-def getredcapfieldsjson(fieldlist, study='hcpdparent '):  # , token=token[0],field=field[0],event=event[0]):
+def getredcapfieldsjson(fieldlist, study):  # , token=token[0],field=field[0],event=event[0]):
     """
     Downloads requested fields from Redcap databases specified by details in redcapconfig file
     Returns panda dataframe with fields 'study', 'Subject_ID, 'subject', and 'flagged', where 'Subject_ID' is the
@@ -182,23 +182,23 @@ def extraheightcleanvar(dfnewchildold):
     return cleandata
 
 
-box_temp = '/home/petra/UbWinSharedSpace1/boxtemp'
-box = LifespanBox(cache=box_temp)
-cache_space = box_temp
+# +
+box = LifespanBox()
 
 snapshotdate = datetime.datetime.today().strftime('%m_%d_%Y')
 
 ###REDCAP API tokens moved to configuration file
-redcapconfigfile = "/home/petra/UbWinSharedSpace1/ccf-nda-behavioral/PycharmToolbox/.boxApp/redcapconfig.csv"
-# redcapconfigfile='/data/intradb/home/.boxApp/redcapconfig.csv'
-boxconfigfile = "/home/petra/UbWinSharedSpace1/ccf-nda-behavioral/PycharmToolbox/.boxApp/config.json"
-crosswalkfile = "/home/petra/UbWinSharedSpace1/redcap2nda_Lifespan2019/HCD_crosswalk_docs/HCPD_Crosswalk_concatenated_22Nov2019.csv"
+config = LoadSettings()
+boxconfigfile = config['box']
+# -
+
+crosswalkfile = "HCPD-crosswalk.csv"
 crosswalk = pd.read_csv(crosswalkfile)
 
-ndar_fields = 'UnrelatedHCAHCD_w_STG_Image_and_pseudo_GUID09_27_2019.csv'
-ndar = pd.read_csv('/home/petra/UbWinSharedSpace1/redcap2nda_Lifespan2019/Dev_pedigrees/' + ndar_fields)
-ndar = ndar.loc[ndar.subjectped.str.contains('HCD')]
-pathout = "/home/petra/UbWinSharedSpace1/redcap2nda_Lifespan2019/HCD_crosswalk_docs/prepped_structures"
+ndar = pd.read_csv('./UnrelatedHCAHCD_w_STG_Image_and_pseudo_GUID09_27_2019.csv')
+ndar = ndar[ndar.subjectped.str.contains('HCD')]
+
+pathout = "./prepped_structures"
 
 # will import the crosswalk and sort by structures, then do for all structures the following
 # get fieldlist for items in this structure (if redcap based and not special case like session drugs)
@@ -207,16 +207,23 @@ pathout = "/home/petra/UbWinSharedSpace1/redcap2nda_Lifespan2019/HCD_crosswalk_d
 # structures=crosswalk.groupby('nda_structure').count().reset_index()[['nda_structure']]
 structures = crosswalk.groupby('nda_structure').count().reset_index()[['nda_structure']]
 
+
+
+structures = crosswalk.drop_duplicates('nda_structure')
 # normal redcap structures
-normals = structures.loc[
-    (structures['source'].str.contains('REDCap') == True) & (structures.specialty_code.isnull() == True)]
+normals = structures[structures.source.str.contains('REDCap') & structures.specialty_code.isnull()]
+normals
+
+# +
 crosswalk['dbasestring'] = crosswalk.dbase.astype(str)
 crosswalk.loc[crosswalk.dbasestring.str.contains('hcp'), 'countdb'] = crosswalk.dbasestring.str.split().apply(len)
 
 # note that all the structures here in this particular crosswalk and release include data from parent database only
 # parent about child  -- no parent apbout parent.
 # parent about parent data to be dealt with later as extension of this release..i.e. with fu data, v2, and v3
+# -
 
+normals
 
 for structure in normals['nda_structure']:
     elements = crosswalk.loc[crosswalk['nda_structure'] == structure][['hcp_variable']]
@@ -250,6 +257,7 @@ for structure in normals['nda_structure']:
         studydata = studydata_v2.copy()
     redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpd', dframe=studydata)
 
+# +
 # special cases
 #########   fenvs01 ##########################################
 # fenvs01 requires a merge after two independent cats
@@ -364,8 +372,9 @@ redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpd', df
 
 ######### end fenvs01 ##########################################
 
-#######################################
+# +
 # special case Penncnp
+# +
 extrasc = getredcapfieldsjson(fieldlist=[], study='hcpdchild')
 extras18 = getredcapfieldsjson(fieldlist=[], study='hcpd18')
 extras = pd.concat([extrasc, extras18], axis=0)
@@ -414,7 +423,7 @@ for structure in structuresbox['nda_structure']:
         dout.to_csv(f, index=False)
 
 ###end penncnp
-#######################################
+# -
 # WISC,WPPSI,WAIS
 # use extras from penn special case
 for w in ['WISC', 'WPPSI', 'WAIS']:
@@ -446,9 +455,10 @@ for w in ['WISC', 'WPPSI', 'WAIS']:
         f.write(strucroot + "," + str(int(strucnum)) + "\n")
         dout.to_csv(f, index=False)
 
-#######################################
+# +
 # caffeine nicotine and other drug sessions
 # need six rows per person corresponding to 6 sessions
+# +
 crosswalk_subset = crosswalk.loc[crosswalk['nda_structure'] == 'drugscr01']
 sessions = ['1', '2', '3', '4', '5', '6']
 renamelist = crosswalk_subset.loc[(crosswalk_subset['hcp_variable'].str.contains('s1') == True) |
@@ -520,8 +530,7 @@ else:
         f.write(strucroot + "," + str(int(strucnum)) + "\n")
         dout.to_csv(f, index=False)
 
-""
-
+# +
 ###notes for when the bloodsamples and labs come in for hcd (different than hca_
 # child	bld_hba1c = hcpd18	hba1c
 # hcpd18	bld_rucdr_saliva = child	rucdrsaliva

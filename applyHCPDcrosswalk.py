@@ -10,14 +10,13 @@ from libs.box import LifespanBox
 from libs.config import LoadSettings
 from libs.redcap import RedcapTable, get_behavioral_ids, get_behavioral
 
-def parent2child(studydata):
-    studydata = studydata \
-        .drop(columns={'parent_id', 'subject', 'flagged'}) \
-        .rename(columns={'child_id': 'subject_id'})
-    new = studydata.subject_id.str.split("_", 1, expand=True)
-    studydata['subject'] = new[0].str.strip()
-    studydata['flagged'] = new[1].str.strip()
-    return studydata
+def parent2child(df):
+    df = df.\
+        drop(columns=['subjectid']).\
+        rename(columns={'child_id': 'subjectid'})
+
+    df[['subject','flagged']] = df.subjectid.str.split('_', 1, expand=True)
+    return df
 
 
 def Box2dataframe(curated_fileid_start):

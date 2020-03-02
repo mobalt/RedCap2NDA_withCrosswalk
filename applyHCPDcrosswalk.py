@@ -84,30 +84,16 @@ def redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='
 
 def extraheightcleanvar(dfnewchildold):
     dfnewchild = dfnewchildold.copy()
-    dfnewchild.groupby('height').count()[0:50]
-    dfnewchild['heightorig'] = dfnewchild.height
-    dfnewchild.height = dfnewchild.height.str.lower().str.replace('"', "'")
-    dfnewchild.height = dfnewchild.height.str.replace("''", "'")
-    dfnewchild[dfnewchild.height.str.contains('/') == True]
-    dfnewchild.height = dfnewchild.height.str.replace("1/2", ".5")
-    dfnewchild.height = dfnewchild.height.str.replace("ft'", "'")
-    dfnewchild.height = dfnewchild.height.str.replace("ft", "'")
-    dfnewchild.height = dfnewchild.height.str.replace("4,5'", "4'5'")
-    dfnewchild.groupby('weight').count()[0:50]
-    dfnewchild.weight = dfnewchild.weight.str.replace('lbs', '')
-    dfnewchild.weight = dfnewchild.weight.str.replace(' LBS', '')
+    h = dfnewchild.height.str.extract('^(?P<feet>[0-9.]+)(?:[^0-9.]+(?P<inches>[0-9.]+))?')
+    dfnewchild.height = 12*h.feet.astype(float) + h.inches.astype(float)
+    dfnewchild.height = dfnewchild.height.fillna(0)
+    dfnewchild.weight.str.extract('([0-9.]+)', expand=False).astype(float)
+
     dfnewchild.bpressure = dfnewchild.bpressure.str.replace('_', '')
-    new = dfnewchild.height.str.split("'", n=1, expand=True)
-    dfnewchild['heightfeet'] = new[0]
-    dfnewchild['heightinch'] = new[1].str.replace("'", "")
-    dfnewchild['heightinchnum'] = pd.to_numeric(dfnewchild.heightinch, errors='coerce')
-    dfnewchild['heightfeetnum'] = pd.to_numeric(dfnewchild.heightfeet, errors='coerce')
-    dfnewchild.loc[dfnewchild.heightinchnum.isnull() & (dfnewchild.height != ''), 'heightinchnum'] = 0
-    dfnewchild['totalheightinches'] = 12 * dfnewchild.heightfeetnum + dfnewchild.heightinchnum
-    # cleandata=dfnewchild.drop(columns=['height','heightorig','heightfeet', 'heightinch', 'heightinchnum', 'heightfeetnum']).copy()
+
     cleandata = dfnewchild[['bpressure', 'dob', 'flagged', 'gender', 'interview_age',
-                            'interview_date', 'site', 'study', 'subject', 'subject_id', 'weight',
-                            'totalheightinches']].copy()
+                            'interview_date', 'site', 'study', 'subject', 'subjectid', 'weight',
+                            'height']].copy()
     return cleandata
 
 
@@ -173,7 +159,6 @@ for structure in normals.nda_structure:
     # exceptions - no deviation from concat, but python snp too long to paste in column
     if structure == 'vitals01':
         studydata_v2 = extraheightcleanvar(studydata)
-        studydata_v2.height = studydata_v2.totalheightinches
         studydata = studydata_v2.copy()
     redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='hcpd', dframe=studydata)
 

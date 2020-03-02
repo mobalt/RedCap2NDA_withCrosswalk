@@ -38,11 +38,10 @@ def redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='
          'action_request', 'hcp_variable_upload', 'requested_python']]
 
     # execute transformation codes stored in the crosswalk
-    for index, row in crosswalk_subset.iterrows():
-        if pd.isna(row.requested_python):
-            pass
-        else:
-            exec(row.requested_python)
+    # TODO: sanitize input to prevent malicious code injection
+    for livewire in crosswalk_subset.requested_python[crosswalk_subset.requested_python.notna()]:
+        exec(livewire)
+
     # remove fields with empty values hcp_variable name in uploaded file -- these are empty because NDA doesnt want them
     crosswalk_subset = crosswalk_subset[crosswalk_subset['hcp_variable name in uploaded file'].notna()]
     listout = ['subject', 'flagged', 'interview_date', 'interview_age', 'gender'] + list(

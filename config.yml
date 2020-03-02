@@ -19,7 +19,7 @@ Redcap:
         sitenum: site
     hcpd18:
       events:
-        - visit_1_arm_1
+        - visit_arm_1
       fields:
         dobvar: dob
         field: subject_id

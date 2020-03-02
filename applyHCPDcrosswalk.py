@@ -43,9 +43,9 @@ def redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='
         exec(livewire)
 
     # remove fields with empty values hcp_variable name in uploaded file -- these are empty because NDA doesnt want them
-    crosswalk_subset = crosswalk_subset[crosswalk_subset['hcp_variable name in uploaded file'].notna()]
-    listout = ['subject', 'flagged', 'interview_date', 'interview_age', 'gender'] + list(
-        crosswalk_subset['hcp_variable name in uploaded file'])
+    crosswalk_subset = crosswalk_subset[crosswalk_subset['hcp_variable_upload'].notna()]
+    listout = ['subject', 'flagged', 'interview_date', 'interview_age', 'gender'] +\
+                crosswalk_subset['hcp_variable_upload'].tolist()
     # output new variables and subset to those not flagged for withdrawal.
     transformed = studydata[listout][studydata.flagged.isnull()].drop(
         columns={'flagged', 'interview_date', 'gender', 'interview_age'})
@@ -307,7 +307,7 @@ structuresbox = crosswalk_subset.drop_duplicates(subset='nda_structure')[
     ['source', 'dbase', 'nda_structure', 'specialty_code']]
 for structure in structuresbox.nda_structure:
     listvars = crosswalk_subset.loc[
-        crosswalk_subset.nda_structure == structure, 'hcp_variable name in uploaded file'].tolist()
+        crosswalk_subset.nda_structure == structure, 'hcp_variable_upload'].tolist()
     pennstruct = penn[['subid'] + listvars]
     studydata = pd.merge(pennstruct, extras, left_on='subid', right_on='subject', how='right')
     transformed = studydata[studydata.flagged.isnull()].drop(columns='flagged')
@@ -341,7 +341,7 @@ for w in ['WISC', 'WPPSI', 'WAIS']:
     wid = crosswalk_subset.dbase.unique()[0]
     wisc = Box2dataframe(wid)
     wisc = wisc[wisc.visit == 'V1']
-    listvars = crosswalk_subset['hcp_variable name in uploaded file'].tolist()
+    listvars = crosswalk_subset['hcp_variable_upload'].tolist()
     wiscstruct = wisc[['subject'] + listvars]
     studydata = pd.merge(wiscstruct, extras, left_on='subject', right_on='subject', how='right')
     transformed = studydata[studydata.flagged.isnull()].drop(columns='flagged')
@@ -405,7 +405,7 @@ for session in sessions:
     allstudydata['version_form'] = session
     allsessions = pd.concat([allsessions, allstudydata], axis=0, sort=True)
 
-lout = list(crosswalk_subset['hcp_variable name in uploaded file'])
+lout = list(crosswalk_subset['hcp_variable_upload'])
 cleanedlist = [x for x in lout if str(x) != 'nan']
 listout = ['subject', 'flagged', 'interview_date', 'interview_age',
            'gender'] + cleanedlist  # output new variables and subset to those not flagged for withdrawal.

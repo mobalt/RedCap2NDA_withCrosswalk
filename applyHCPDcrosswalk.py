@@ -200,15 +200,6 @@ ndar = ndar[ndar.subjectped.str.contains('HCD')]
 
 pathout = "./prepped_structures"
 
-# will import the crosswalk and sort by structures, then do for all structures the following
-# get fieldlist for items in this structure (if redcap based and not special case like session drugs)
-# get the data from redcap corresponding to this fieldlist (sincerely hope no merging required with Box data...
-# needs to be called study data because code snpts in crosswalk refer to studydata datafram
-# structures=crosswalk.groupby('nda_structure').count().reset_index()[['nda_structure']]
-structures = crosswalk.groupby('nda_structure').count().reset_index()[['nda_structure']]
-
-
-
 structures = crosswalk.drop_duplicates('nda_structure')
 # normal redcap structures
 normals = structures[structures.source.str.contains('REDCap') & structures.specialty_code.isnull()]
@@ -223,9 +214,7 @@ crosswalk.loc[crosswalk.dbasestring.str.contains('hcp'), 'countdb'] = crosswalk.
 # parent about parent data to be dealt with later as extension of this release..i.e. with fu data, v2, and v3
 # -
 
-structure = 'asr01'
 
-crosswalk[crosswalk.nda_structure == structure].hcp_variable
 
 for structure in normals.nda_structure:
     variables = crosswalk[crosswalk.nda_structure == structure].hcp_variable.tolist()

@@ -23,7 +23,7 @@ def Box2dataframe(curated_fileid_start):
     return box.Box2dataframe(curated_fileid_start)
 
 pathout = './pathout/'
-def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa', dframe=None):
+def redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='hcpa', dframe=None):
     """
     Takes list of vars from the crosswalk, gets the data from Redcap, and puts into structure format after
     merging with NDAR requiredvars.  Outputs a csv structure in NDA format to pathstructureout location
@@ -31,11 +31,11 @@ def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa'
     if dframe is not None:
         studydata = dframe
     else:
-        studydata = getredcapfieldsjson(fieldlist=vars, study=studystr)
+        studydata = getredcapfieldsjson(fieldlist=variables, study=studystr)
     # get the relevant rows of the crosswalk
     # inner merge works for redcap source..need right merge for box, though, to get extra vars for missing people
     crosswalk_subset = \
-        pd.merge(crosswalk, pd.DataFrame(vars, columns=['hcp_variable']), on='hcp_variable', how='inner')[
+        pd.merge(crosswalk, pd.DataFrame(variables, columns=['hcp_variable']), on='hcp_variable', how='inner')[
             ['nda_structure', 'nda_element', 'hcp_variable', 'source',
              'action_request',
              'hcp_variable name in uploaded file',
@@ -223,30 +223,32 @@ crosswalk.loc[crosswalk.dbasestring.str.contains('hcp'), 'countdb'] = crosswalk.
 # parent about parent data to be dealt with later as extension of this release..i.e. with fu data, v2, and v3
 # -
 
-normals
+structure = 'asr01'
+
+crosswalk[crosswalk.nda_structure == structure].hcp_variable
 
 for structure in normals.nda_structure:
-    vars = crosswalk[crosswalk.nda_structure == structure].hcp_variable.tolist()
+    variables = crosswalk[crosswalk.nda_structure == structure].hcp_variable.tolist()
     numstudies = crosswalk.loc[crosswalk.nda_structure == structure, 'countdb'].values[0]
     if numstudies == 1.0:
         study = crosswalk.loc[crosswalk.nda_structure == structure, 'dbase'].values[0]
         if study == 'hcpdparent':
-            varsnew = ['child_id'] + vars
+            varsnew = ['child_id'] + variables
             studydata = getredcapfieldsjson(fieldlist=varsnew, study='hcpdparent')
             studydata = parent2child(studydata)  # put data in name of child (e.g. child_id becomes subject)
         else:
-            studydata = getredcapfieldsjson(fieldlist=vars, study=study)
+            studydata = getredcapfieldsjson(fieldlist=variables, study=study)
     if numstudies == 2.0:
         allstudydata = pd.DataFrame()
         studies = crosswalk.loc[crosswalk.nda_structure == structure, 'dbase'].values[0]
         for pop in studies.split():
             studydata = pd.DataFrame()
             if pop == 'hcpdparent':
-                varsnew = ['child_id'] + vars
+                varsnew = ['child_id'] + variables
                 studydata = getredcapfieldsjson(fieldlist=varsnew, study='hcpdparent')
                 studydata = parent2child(studydata)  # put data in name of child (e.g. child_id becomes subject)
             else:
-                studydata = getredcapfieldsjson(fieldlist=vars, study=pop)
+                studydata = getredcapfieldsjson(fieldlist=variables, study=pop)
             allstudydata = pd.concat([allstudydata, studydata], axis=0, sort=True)
         studydata = allstudydata.copy()
     # exceptions - no deviation from concat, but python snp too long to paste in column
@@ -254,7 +256,15 @@ for structure in normals.nda_structure:
         studydata_v2 = extraheightcleanvar(studydata)
         studydata_v2.height = studydata_v2.totalheightinches
         studydata = studydata_v2.copy()
-    redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpd', dframe=studydata)
+    redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='hcpd', dframe=studydata)
+
+
+
+
+
+
+
+
 
 # +
 # special cases
@@ -366,8 +376,8 @@ studydata2gether[studydata2gether._merge == 'left_only'][['subject', 'site']]
 # inner merge
 studydata2gether = pd.merge(studydata, studydata2[['subject', 'fpnh_dad', 'fpnh_mom']], how='inner', on='subject')
 # make structure
-vars = varscat + varscat2
-redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpd', dframe=studydata2gether)
+variables = varscat + varscat2
+redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='hcpd', dframe=studydata2gether)
 
 ######### end fenvs01 ##########################################
 

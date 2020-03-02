@@ -217,10 +217,11 @@ crosswalk.loc[crosswalk.dbasestring.str.contains('hcp'), 'countdb'] = crosswalk.
 
 
 for structure in normals.nda_structure:
-    variables = crosswalk[crosswalk.nda_structure == structure].hcp_variable.tolist()
-    numstudies = crosswalk.loc[crosswalk.nda_structure == structure, 'countdb'].values[0]
+    current_structure = crosswalk[crosswalk.nda_structure == structure]
+    variables = current_structure.hcp_variable.tolist()
+    numstudies = current_structure.countdb.values[0]
     if numstudies == 1.0:
-        study = crosswalk.loc[crosswalk.nda_structure == structure, 'dbase'].values[0]
+        study = current_structure.dbase.values[0]
         if study == 'hcpdparent':
             varsnew = ['child_id'] + variables
             studydata = getredcapfieldsjson(fieldlist=varsnew, study='hcpdparent')
@@ -229,7 +230,7 @@ for structure in normals.nda_structure:
             studydata = getredcapfieldsjson(fieldlist=variables, study=study)
     if numstudies == 2.0:
         allstudydata = pd.DataFrame()
-        studies = crosswalk.loc[crosswalk.nda_structure == structure, 'dbase'].values[0]
+        studies = current_structure.dbase.values[0]
         for pop in studies.split():
             studydata = pd.DataFrame()
             if pop == 'hcpdparent':

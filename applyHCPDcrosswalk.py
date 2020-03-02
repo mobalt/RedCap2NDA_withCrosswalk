@@ -47,11 +47,11 @@ def redcap2structure(vars, crosswalk, pathstructuresout=pathout, studystr='hcpa'
         else:
             exec(row.requested_python)
     # remove fields with empty values hcp_variable name in uploaded file -- these are empty because NDA doesnt want them
-    crosswalk_subset = crosswalk_subset.loc[crosswalk_subset['hcp_variable name in uploaded file'].isnull() == False]
+    crosswalk_subset = crosswalk_subset.loc[crosswalk_subset['hcp_variable name in uploaded file'].notna()]
     listout = ['subject', 'flagged', 'interview_date', 'interview_age', 'gender'] + list(
         crosswalk_subset['hcp_variable name in uploaded file'])
     # output new variables and subset to those not flagged for withdrawal.
-    transformed = studydata[listout].loc[studydata.flagged.isnull() == True].drop(
+    transformed = studydata[listout].loc[studydata.flagged.isnull()].drop(
         columns={'flagged', 'interview_date', 'gender', 'interview_age'})
     # merge with required fields from vars in intradb staging (guid, etc)
     # not sure whether it makes sense to pull these in here or recalculate on fly from redcap.
@@ -136,7 +136,7 @@ def getredcapfieldsjson(fieldlist, study):  # , token=token[0],field=field[0],ev
                 (pd.to_datetime(studydata.interview_date).dt.month - pd.to_datetime(studydata.dob).dt.month) +
                 (pd.to_datetime(studydata.interview_date).dt.day - pd.to_datetime(studydata.dob).dt.day) / 31)
         studydatasub = studydata.loc[studydata.nb_months.isnull()].copy()
-        studydatasuper = studydata.loc[~(studydata.nb_months.isnull())].copy()
+        studydatasuper = studydata.loc[studydata.nb_months.notna()].copy()
         studydatasuper['nb_months'] = studydatasuper.nb_months.apply(np.floor).astype(int)
         studydatasuper['nb_monthsPHI'] = studydatasuper.nb_months
         studydatasuper.loc[studydatasuper.nb_months > 1080, 'nb_monthsPHI'] = 1200
@@ -173,7 +173,7 @@ def extraheightcleanvar(dfnewchildold):
     dfnewchild['heightinch'] = new[1].str.replace("'", "")
     dfnewchild['heightinchnum'] = pd.to_numeric(dfnewchild.heightinch, errors='coerce')
     dfnewchild['heightfeetnum'] = pd.to_numeric(dfnewchild.heightfeet, errors='coerce')
-    dfnewchild.loc[(dfnewchild.heightinchnum.isnull() == True) & (dfnewchild.height != ''), 'heightinchnum'] = 0
+    dfnewchild.loc[dfnewchild.heightinchnum.isnull() & (dfnewchild.height != ''), 'heightinchnum'] = 0
     dfnewchild['totalheightinches'] = 12 * dfnewchild.heightfeetnum + dfnewchild.heightinchnum
     # cleandata=dfnewchild.drop(columns=['height','heightorig','heightfeet', 'heightinch', 'heightinchnum', 'heightfeetnum']).copy()
     cleandata = dfnewchild[['bpressure', 'dob', 'flagged', 'gender', 'interview_age',
@@ -401,7 +401,7 @@ for structure in structuresbox.nda_structure:
         crosswalk_subset.nda_structure == structure, 'hcp_variable name in uploaded file'].tolist()
     pennstruct = penn[['subid'] + listvars]
     studydata = pd.merge(pennstruct, extras, left_on='subid', right_on='subject', how='right')
-    transformed = studydata.loc[studydata.flagged.isnull() == True].drop(columns='flagged')
+    transformed = studydata.loc[studydata.flagged.isnull()].drop(columns='flagged')
     # merge with required fields from ndar subjects
     # --age and date need be recalcuated on fly from redcap data because possiblity of multiple dates per person'
     ndarsub = ndar[['nda_guid', 'subjectped']].rename(
@@ -435,7 +435,7 @@ for w in ['WISC', 'WPPSI', 'WAIS']:
     listvars = crosswalk_subset['hcp_variable name in uploaded file'].tolist()
     wiscstruct = wisc[['subject'] + listvars]
     studydata = pd.merge(wiscstruct, extras, left_on='subject', right_on='subject', how='right')
-    transformed = studydata.loc[studydata.flagged.isnull() == True].drop(columns='flagged')
+    transformed = studydata.loc[studydata.flagged.isnull()].drop(columns='flagged')
     # merge with required fields from ndar subjects
     # --age and date need be recalcuated on fly from redcap data because possiblity of multiple dates per person'
     ndarsub = ndar[['nda_guid', 'subjectped']].rename(
@@ -501,7 +501,7 @@ lout = list(crosswalk_subset['hcp_variable name in uploaded file'])
 cleanedlist = [x for x in lout if str(x) != 'nan']
 listout = ['subject', 'flagged', 'interview_date', 'interview_age',
            'gender'] + cleanedlist  # output new variables and subset to those not flagged for withdrawal.
-transformed = allsessions[listout].loc[allsessions.flagged.isnull() == True].drop(
+transformed = allsessions[listout].loc[allsessions.flagged.isnull()].drop(
     columns={'flagged', 'interview_date', 'gender', 'interview_age'})
 # merge with required fields from vars in intradb staging (guid, etc)
 # not sure whether it makes sense to pull these in here or recalculate on fly from redcap.

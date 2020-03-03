@@ -4,23 +4,13 @@ import json
 import os
 from io import BytesIO
 
+import crosswalkHelper as cw
 import numpy as np
 import pandas as pd
 from libs.box import LifespanBox
 from libs.config import LoadSettings
 from libs.redcap import RedcapTable, get_behavioral_ids, get_behavioral
 
-def parent2child(df):
-    df = df.\
-        drop(columns=['subjectid']).\
-        rename(columns={'child_id': 'subjectid'})
-
-    df[['subject','flagged']] = df.subjectid.str.split('_', 1, expand=True)
-    return df
-
-
-def Box2dataframe(curated_fileid_start):
-    return box.Box2dataframe(curated_fileid_start)
 
 pathout = './pathout/'
 def redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='hcpa', dframe=None):
@@ -78,20 +68,6 @@ def redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='
         dout.to_csv(f, index=False)
 
 
-def extraheightcleanvar(dfnewchildold):
-    dfnewchild = dfnewchildold.copy()
-    h = dfnewchild.height.str.extract('^(?P<feet>[0-9.]+)(?:[^0-9.]+(?P<inches>[0-9.]+))?')
-    dfnewchild.height = 12*h.feet.astype(float) + h.inches.astype(float)
-    dfnewchild.height = dfnewchild.height.fillna(0)
-    dfnewchild.weight.str.extract('([0-9.]+)', expand=False).astype(float)
-
-    dfnewchild.bpressure = dfnewchild.bpressure.str.replace('_', '')
-
-    cleandata = dfnewchild[['bpressure', 'dob', 'flagged', 'gender', 'interview_age',
-                            'interview_date', 'site', 'study', 'subject', 'subjectid', 'weight',
-                            'height']].copy()
-    return cleandata
-
 
 # +
 box = LifespanBox()
@@ -136,7 +112,7 @@ for structure in normals.nda_structure:
         if study == 'hcpdparent':
             varsnew = ['child_id'] + variables
             studydata = get_behavioral(study, varsnew)
-            studydata = parent2child(studydata)  # put data in name of child (e.g. child_id becomes subject)
+            studydata = cw.parent2child(studydata)  # put data in name of child (e.g. child_id becomes subject)
         else:
             studydata = get_behavioral(study, variables)
     if numstudies == 2.0:
@@ -147,15 +123,16 @@ for structure in normals.nda_structure:
             if study == 'hcpdparent':
                 varsnew = ['child_id'] + variables
                 studydata = get_behavioral(study, varsnew)
-                studydata = parent2child(studydata)  # put data in name of child (e.g. child_id becomes subject)
+                studydata = cw.parent2child(studydata)  # put data in name of child (e.g. child_id becomes subject)
             else:
                 studydata = get_behavioral(study, variables)
             allstudydata = pd.concat([allstudydata, studydata], axis=0, sort=True)
         studydata = allstudydata.copy()
     # exceptions - no deviation from concat, but python snp too long to paste in column
     if structure == 'vitals01':
-        studydata_v2 = extraheightcleanvar(studydata)
+        studydata_v2 = cw.extraheightcleanvar(studydata)
         studydata = studydata_v2.copy()
+
     redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='hcpd', dframe=studydata)
 
 
@@ -196,7 +173,7 @@ for study in studies2.split():
     if study == 'hcpdparent':
         varsnew = ['child_id'] + varscat2
         studydata2 = get_behavioral(study, varsnew)
-        studydata2 = parent2child(studydata2)  # put data in name of child (e.g. child_id becomes subject)
+        studydata2 = cw.parent2child(studydata2)  # put data in name of child (e.g. child_id becomes subject)
     else:
         studydata2 = get_behavioral(study, varscat2)
     allstudydata2 = pd.concat([allstudydata2, studydata2], axis=0, sort=True)
@@ -292,7 +269,7 @@ crosswalk_subset = crosswalk[crosswalk.source.str.contains('Box')
                                  & crosswalk.source.str.contains('PennCNP')]
 
 pennid = crosswalk_subset.dbase.unique()[0]
-penn = Box2dataframe(pennid)
+penn = box.Box2dataframe(pennid)
 penn = penn[penn.assessment == 'V1']
 
 # execute any specialty codes
@@ -339,7 +316,7 @@ for w in ['WISC', 'WPPSI', 'WAIS']:
     crosswalk_subset = crosswalk[crosswalk.source.str.contains('Box')
                                      & crosswalk.source.str.contains(w)]
     wid = crosswalk_subset.dbase.unique()[0]
-    wisc = Box2dataframe(wid)
+    wisc = box.Box2dataframe(wid)
     wisc = wisc[wisc.visit == 'V1']
     listvars = crosswalk_subset['hcp_variable_upload'].tolist()
     wiscstruct = wisc[['subject'] + listvars]

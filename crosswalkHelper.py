@@ -12,7 +12,8 @@ def extraheightcleanvar(dfnewchildold):
     h = dfnewchild.height.str.extract('^(?P<feet>[0-9.]+)(?:[^0-9.]+(?P<inches>[0-9.]+))?')
     dfnewchild.height = 12*h.feet.astype(float) + h.inches.astype(float)
     dfnewchild.height = dfnewchild.height.fillna(0)
-    dfnewchild.weight.str.extract('([0-9.]+)', expand=False).astype(float)
+    if dfnewchild.weight.dtype == 'object':
+        dfnewchild.weight = dfnewchild.weight.str.extract('([0-9.]+)', expand=False).astype(float)
 
     dfnewchild.bpressure = dfnewchild.bpressure.str.replace('_', '')
 
@@ -23,8 +24,7 @@ def extraheightcleanvar(dfnewchildold):
 
 pathout = './pathout/'
 def redcap2structure(variables, crosswalk, pathstructuresout=pathout, studystr='hcpa', dframe=None):
-    """
-    Takes list of vars from the crosswalk, gets the data from Redcap, and puts into structure format after
+    """ Takes list of vars from the crosswalk, gets the data from Redcap, and puts into structure format after
     merging with NDAR requiredvars.  Outputs a csv structure in NDA format to pathstructureout location
     """
     if dframe is not None:

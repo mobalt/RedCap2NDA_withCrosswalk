@@ -1308,65 +1308,23 @@ def nida_y_tobaco7(studydata, column, context):
     })
 fn["nida_y_tobaco7"]=nida_y_tobaco7
 
-def nida_y_drug1(studydata, column, context):
+def __recode_1_2_as_yes_no(studydata, column, context):
     """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug1=studydata.nida_y_drug1.str.replace('1','Yes')
-    studydata.nida_y_drug1=studydata.nida_y_drug1.str.replace('2','No')
-fn["nida_y_drug1"]=nida_y_drug1
+    return column.replace({
+        1: 'Yes',
+        2: 'No',
+    })
 
-def nida_y_drug2(studydata, column, context):
-    """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug2=studydata.nida_y_drug2.str.replace('1','Yes')
-    studydata.nida_y_drug2=studydata.nida_y_drug2.str.replace('2','No')
-fn["nida_y_drug2"]=nida_y_drug2
-
-def nida_y_drug3(studydata, column, context):
-    """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug3=studydata.nida_y_drug3.str.replace('1','Yes')
-    studydata.nida_y_drug3=studydata.nida_y_drug3.str.replace('2','No')
-fn["nida_y_drug3"]=nida_y_drug3
-
-def nida_y_drug4(studydata, column, context):
-    """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug4=studydata.nida_y_drug4.str.replace('1','Yes')
-    studydata.nida_y_drug4=studydata.nida_y_drug4.str.replace('2','No')
-fn["nida_y_drug4"]=nida_y_drug4
-
-def nida_y_drug5(studydata, column, context):
-    """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug5=studydata.nida_y_drug5.str.replace('1','Yes')
-    studydata.nida_y_drug5=studydata.nida_y_drug5.str.replace('2','No')
-fn["nida_y_drug5"]=nida_y_drug5
-
-def nida_y_drug6(studydata, column, context):
-    """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug6=studydata.nida_y_drug6.str.replace('1','Yes')
-    studydata.nida_y_drug6=studydata.nida_y_drug6.str.replace('2','No')
-fn["nida_y_drug6"]=nida_y_drug6
-
-def nida_y_drug7(studydata, column, context):
-    """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug7=studydata.nida_y_drug7.str.replace('1','Yes')
-    studydata.nida_y_drug7=studydata.nida_y_drug7.str.replace('2','No')
-fn["nida_y_drug7"]=nida_y_drug7
-
-def nida_y_drug8(studydata, column, context):
-    """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug8=studydata.nida_y_drug8.str.replace('1','Yes')
-    studydata.nida_y_drug8=studydata.nida_y_drug8.str.replace('2','No')
-fn["nida_y_drug8"]=nida_y_drug8
-
-def nida_y_drug9(studydata, column, context):
-    """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug9=studydata.nida_y_drug9.str.replace('1','Yes')
-    studydata.nida_y_drug9=studydata.nida_y_drug9.str.replace('2','No')
-fn["nida_y_drug9"]=nida_y_drug9
-
-def nida_y_drug10(studydata, column, context):
-    """Please recode 1 as Yes and 2 as No."""
-    studydata.nida_y_drug10=studydata.nida_y_drug10.str.replace('1','Yes')
-    studydata.nida_y_drug10=studydata.nida_y_drug10.str.replace('2','No')
-fn["nida_y_drug10"]=nida_y_drug10
+fn["nida_y_drug1"]=__recode_1_2_as_yes_no
+fn["nida_y_drug2"]=__recode_1_2_as_yes_no
+fn["nida_y_drug3"]=__recode_1_2_as_yes_no
+fn["nida_y_drug4"]=__recode_1_2_as_yes_no
+fn["nida_y_drug5"]=__recode_1_2_as_yes_no
+fn["nida_y_drug6"]=__recode_1_2_as_yes_no
+fn["nida_y_drug7"]=__recode_1_2_as_yes_no
+fn["nida_y_drug8"]=__recode_1_2_as_yes_no
+fn["nida_y_drug9"]=__recode_1_2_as_yes_no
+fn["nida_y_drug10"]=__recode_1_2_as_yes_no
 
 def pds_sub_score(studydata, column, context):
     """Please split this column into two separate columns. Male participants' data can go to 'pds_pv_boy_tanner'. Female participants' data belong in 'pds_pv_girl_tanner'."""

@@ -42,6 +42,7 @@ cols_of_interest = ['nda_structure', 'nda_element', 'hcp_variable', 'source',
 
 # # For-Loop
 
+# +
 for structure in normals.nda_structure:
     print(structure)
 
@@ -61,8 +62,8 @@ for structure in normals.nda_structure:
         accumulator.append(studydata)
     studydata = pd.concat(accumulator)
 
-    if structure == 'vitals01':
-        studydata = cw.extraheightcleanvar(studydata)
+#     if structure == 'vitals01':
+#         studydata = cw.extraheightcleanvar(studydata)
 
     # remove withdrawn or flagged participants
     studydata = studydata[studydata.flagged.isna()]
@@ -113,5 +114,6 @@ for structure in normals.nda_structure:
     with open(filepath, 'w') as fd:
         fd.write('{},{:d}\n'.format(root, int(num)))
         dout.to_csv(fd, index=False)
+# -
 
 

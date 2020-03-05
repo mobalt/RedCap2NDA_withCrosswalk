@@ -29,12 +29,6 @@ box = LifespanBox()
 crosswalk = pd.read_csv("HCPD-crosswalk.csv")
 red = crosswalk[crosswalk.source == 'REDCap'].copy()
 
-# +
-# red['hcpdchild'] = red.dbase.str.contains('hcpdchild')
-# red['hcpd18'] = red.dbase.str.contains('hcpd18')
-# red['hcpdparent'] = red.dbase.str.contains('hcpdparent')
-# -
-
 ndar = pd.read_csv('./UnrelatedHCAHCD_w_STG_Image_and_pseudo_GUID09_27_2019.csv')
 ndar = ndar[ndar.subjectped.str.contains('HCD')]
 
@@ -42,38 +36,6 @@ structures = red.drop_duplicates('nda_structure')
 normals = structures[structures.source.str.contains('REDCap') & structures.specialty_code.isnull()]
 
 normals.nda_structure
-
-# for structure in normals.nda_structure.tolist()[:]:
-#     current_structure = crosswalk[crosswalk.nda_structure == structure]
-#     variables = current_structure.hcp_variable.tolist()
-#     numstudies = current_structure.countdb.values[0]
-#     if numstudies == 1.0:
-#         study = current_structure.dbase.values[0]
-#         if study == 'hcpdparent':
-#             varsnew = ['child_id'] + variables
-#             studydata = get_behavioral(study, varsnew)
-#             studydata = cw.parent2child(studydata)  # put data in name of child (e.g. child_id becomes subject)
-#         else:
-#             studydata = get_behavioral(study, variables)
-#     if numstudies == 2.0:
-#         allstudydata = pd.DataFrame()
-#         studies = current_structure.dbase.values[0]
-#         for study in studies.split():
-#             studydata = pd.DataFrame()
-#             if study == 'hcpdparent':
-#                 varsnew = ['child_id'] + variables
-#                 studydata = get_behavioral(study, varsnew)
-#                 studydata = cw.parent2child(studydata)  # put data in name of child (e.g. child_id becomes subject)
-#             else:
-#                 studydata = get_behavioral(study, variables)
-#             allstudydata = pd.concat([allstudydata, studydata], axis=0, sort=True)
-#         studydata = allstudydata.copy()
-#     # exceptions - no deviation from concat, but python snp too long to paste in column
-#     if structure == 'vitals01':
-#         studydata_v2 = cw.extraheightcleanvar(studydata)
-#         studydata = studydata_v2.copy()
-#
-#     redcap2structure(variables, crosswalk, pathstructuresout="./prepped_structures", studystr='hcpd', dframe=studydata)
 
 cols_of_interest = ['nda_structure', 'nda_element', 'hcp_variable', 'source',
          'action_request', 'hcp_variable_upload', 'requested_python']

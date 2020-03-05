@@ -2,795 +2,151 @@ import pandas as pd
 import numpy as np
 fn = {}
 
-def asr1(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr1=pd.to_numeric(studydata.asr1,errors='coerce')+1
-    studydata.asr1=asr1.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr1"]=asr1
-
-def asr2(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr2=pd.to_numeric(studydata.asr2,errors='coerce')+1
-    studydata.asr2=asr2.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr2"]=asr2
-
-def asr3(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr3=pd.to_numeric(studydata.asr3,errors='coerce')+1
-    studydata.asr3=asr3.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr3"]=asr3
-
-def asr4(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr4=pd.to_numeric(studydata.asr4,errors='coerce')+1
-    studydata.asr4=asr4.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr4"]=asr4
-
-def asr5(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr5=pd.to_numeric(studydata.asr5,errors='coerce')+1
-    studydata.asr5=asr5.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr5"]=asr5
-
-def asr6(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr6=pd.to_numeric(studydata.asr6,errors='coerce')+1
-    studydata.asr6=asr6.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr6"]=asr6
-
-def asr7(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr7=pd.to_numeric(studydata.asr7,errors='coerce')+1
-    studydata.asr7=asr7.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr7"]=asr7
-
-def asr8(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr8=pd.to_numeric(studydata.asr8,errors='coerce')+1
-    studydata.asr8=asr8.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr8"]=asr8
-
-def asr9(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr9=pd.to_numeric(studydata.asr9,errors='coerce')+1
-    studydata.asr9=asr9.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr9"]=asr9
-
-def asr10(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr10=pd.to_numeric(studydata.asr10,errors='coerce')+1
-    studydata.asr10=asr10.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr10"]=asr10
-
-def asr11(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr11=pd.to_numeric(studydata.asr11,errors='coerce')+1
-    studydata.asr11=asr11.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr11"]=asr11
-
-def asr12(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr12=pd.to_numeric(studydata.asr12,errors='coerce')+1
-    studydata.asr12=asr12.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr12"]=asr12
-
-def asr13(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr13=pd.to_numeric(studydata.asr13,errors='coerce')+1
-    studydata.asr13=asr13.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr13"]=asr13
-
-def asr14(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr14=pd.to_numeric(studydata.asr14,errors='coerce')+1
-    studydata.asr14=asr14.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr14"]=asr14
-
-def asr15(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr15=pd.to_numeric(studydata.asr15,errors='coerce')+1
-    studydata.asr15=asr15.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr15"]=asr15
-
-def asr16(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr16=pd.to_numeric(studydata.asr16,errors='coerce')+1
-    studydata.asr16=asr16.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr16"]=asr16
-
-def asr17(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr17=pd.to_numeric(studydata.asr17,errors='coerce')+1
-    studydata.asr17=asr17.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr17"]=asr17
-
-def asr18(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr18=pd.to_numeric(studydata.asr18,errors='coerce')+1
-    studydata.asr18=asr18.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr18"]=asr18
-
-def asr19(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr19=pd.to_numeric(studydata.asr19,errors='coerce')+1
-    studydata.asr19=asr19.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr19"]=asr19
-
-def asr20(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr20=pd.to_numeric(studydata.asr20,errors='coerce')+1
-    studydata.asr20=asr20.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr20"]=asr20
-
-def asr21(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr21=pd.to_numeric(studydata.asr21,errors='coerce')+1
-    studydata.asr21=asr21.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr21"]=asr21
-
-def asr22(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr22=pd.to_numeric(studydata.asr22,errors='coerce')+1
-    studydata.asr22=asr22.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr22"]=asr22
-
-def asr23(studydata, column, context):
-    """Please rename this column 'asr4_5' to avoid a naming conflict in our database.  Please increment your 0::2 scale to a 1::3 scale."""
-    asr23=pd.to_numeric(studydata.asr23,errors='coerce')+1
-    studydata.asr23=asr23.fillna(-99).astype(int).astype(str).str.replace('-99','')
-    studydata['asr4_5']=studydata['asr23']
-fn["asr23"]=asr23
-
-def asr24(studydata, column, context):
-    """Please rename this column 'asr4_6' to avoid a naming conflict in our database.Please increment your 0::2 scale to a 1::3 scale."""
-    asr24=pd.to_numeric(studydata.asr24,errors='coerce')+1
-    studydata.asr24=asr24.fillna(-99).astype(int).astype(str).str.replace('-99','')
-    studydata['asr4_6']=studydata['asr24']
-fn["asr24"]=asr24
-
-def asr25(studydata, column, context):
-    """Please rename this column 'asr5_1' to avoid a naming conflict in our database.Please increment your 0::2 scale to a 1::3 scale."""
-    asr25=pd.to_numeric(studydata.asr25,errors='coerce')+1
-    studydata.asr25=asr25.fillna(-99).astype(int).astype(str).str.replace('-99','')
-    studydata['asr5_1']=studydata['asr25']
-fn["asr25"]=asr25
-
-def asr26(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr26=pd.to_numeric(studydata.asr26,errors='coerce')+1
-    studydata.asr26=asr26.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr26"]=asr26
-
-def asr27(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr27=pd.to_numeric(studydata.asr27,errors='coerce')+1
-    studydata.asr27=asr27.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr27"]=asr27
-
-def asr28(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr28=pd.to_numeric(studydata.asr28,errors='coerce')+1
-    studydata.asr28=asr28.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr28"]=asr28
-
-def asr29(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr29=pd.to_numeric(studydata.asr29,errors='coerce')+1
-    studydata.asr29=asr29.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr29"]=asr29
-
-def asr30(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr30=pd.to_numeric(studydata.asr30,errors='coerce')+1
-    studydata.asr30=asr30.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr30"]=asr30
-
-def asr31(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr31=pd.to_numeric(studydata.asr31,errors='coerce')+1
-    studydata.asr31=asr31.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr31"]=asr31
-
-def asr32(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr32=pd.to_numeric(studydata.asr32,errors='coerce')+1
-    studydata.asr32=asr32.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr32"]=asr32
-
-def asr33(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr33=pd.to_numeric(studydata.asr33,errors='coerce')+1
-    studydata.asr33=asr33.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr33"]=asr33
-
-def asr34(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr34=pd.to_numeric(studydata.asr34,errors='coerce')+1
-    studydata.asr34=asr34.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr34"]=asr34
-
-def asr35(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr35=pd.to_numeric(studydata.asr35,errors='coerce')+1
-    studydata.asr35=asr35.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr35"]=asr35
-
-def asr36(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr36=pd.to_numeric(studydata.asr36,errors='coerce')+1
-    studydata.asr36=asr36.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr36"]=asr36
-
-def asr37(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr37=pd.to_numeric(studydata.asr37,errors='coerce')+1
-    studydata.asr37=asr37.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr37"]=asr37
-
-def asr38(studydata, column, context):
-    """Please rename this column 'asr7_2' to avoid a naming conflict in our database.  Please increment your 0::2 scale to a 1::3 scale."""
-    asr38=pd.to_numeric(studydata.asr38,errors='coerce')+1
-    studydata.asr38=asr38.fillna(-99).astype(int).astype(str).str.replace('-99','')
-    studydata['asr7_2']=studydata['asr38']
-fn["asr38"]=asr38
-
-def asr39(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr39=pd.to_numeric(studydata.asr39,errors='coerce')+1
-    studydata.asr39=asr39.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr39"]=asr39
-
-def asr40(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr40=pd.to_numeric(studydata.asr40,errors='coerce')+1
-    studydata.asr40=asr40.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr40"]=asr40
-
-def asr41(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr41=pd.to_numeric(studydata.asr41,errors='coerce')+1
-    studydata.asr41=asr41.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr41"]=asr41
-
-def asr42(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr42=pd.to_numeric(studydata.asr42,errors='coerce')+1
-    studydata.asr42=asr42.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr42"]=asr42
-
-def asr43(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr43=pd.to_numeric(studydata.asr43,errors='coerce')+1
-    studydata.asr43=asr43.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr43"]=asr43
-
-def asr44(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr44=pd.to_numeric(studydata.asr44,errors='coerce')+1
-    studydata.asr44=asr44.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr44"]=asr44
-
-def asr45(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr45=pd.to_numeric(studydata.asr45,errors='coerce')+1
-    studydata.asr45=asr45.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr45"]=asr45
-
-def asr46(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr46=pd.to_numeric(studydata.asr46,errors='coerce')+1
-    studydata.asr46=asr46.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr46"]=asr46
-
-def asr47(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr47=pd.to_numeric(studydata.asr47,errors='coerce')+1
-    studydata.asr47=asr47.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr47"]=asr47
-
-def asr48(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr48=pd.to_numeric(studydata.asr48,errors='coerce')+1
-    studydata.asr48=asr48.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr48"]=asr48
-
-def asr49(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr49=pd.to_numeric(studydata.asr49,errors='coerce')+1
-    studydata.asr49=asr49.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr49"]=asr49
-
-def asr50(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr50=pd.to_numeric(studydata.asr50,errors='coerce')+1
-    studydata.asr50=asr50.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr50"]=asr50
-
-def asr51(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr51=pd.to_numeric(studydata.asr51,errors='coerce')+1
-    studydata.asr51=asr51.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr51"]=asr51
-
-def asr52(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr52=pd.to_numeric(studydata.asr52,errors='coerce')+1
-    studydata.asr52=asr52.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr52"]=asr52
-
-def asr53(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr53=pd.to_numeric(studydata.asr53,errors='coerce')+1
-    studydata.asr53=asr53.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr53"]=asr53
-
-def asr54(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr54=pd.to_numeric(studydata.asr54,errors='coerce')+1
-    studydata.asr54=asr54.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr54"]=asr54
-
-def asr55(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr55=pd.to_numeric(studydata.asr55,errors='coerce')+1
-    studydata.asr55=asr55.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr55"]=asr55
-
-def asr56a(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr56a=pd.to_numeric(studydata.asr56a,errors='coerce')+1
-    studydata.asr56a=asr56a.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr56a"]=asr56a
-
-def asr56b(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr56b=pd.to_numeric(studydata.asr56b,errors='coerce')+1
-    studydata.asr56b=asr56b.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr56b"]=asr56b
-
-def asr56c(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr56c=pd.to_numeric(studydata.asr56c,errors='coerce')+1
-    studydata.asr56c=asr56c.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr56c"]=asr56c
-
-def asr56d(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr56d=pd.to_numeric(studydata.asr56d,errors='coerce')+1
-    studydata.asr56d=asr56d.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr56d"]=asr56d
-
-def asr56e(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr56e=pd.to_numeric(studydata.asr56e,errors='coerce')+1
-    studydata.asr56e=asr56e.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr56e"]=asr56e
-
-def asr56f(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr56f=pd.to_numeric(studydata.asr56f,errors='coerce')+1
-    studydata.asr56f=asr56f.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr56f"]=asr56f
-
-def asr56g(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr56g=pd.to_numeric(studydata.asr56g,errors='coerce')+1
-    studydata.asr56g=asr56g.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr56g"]=asr56g
-
-def asr56h(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr56h=pd.to_numeric(studydata.asr56h,errors='coerce')+1
-    studydata.asr56h=asr56h.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr56h"]=asr56h
-
-def asr56i(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr56i=pd.to_numeric(studydata.asr56i,errors='coerce')+1
-    studydata.asr56i=asr56i.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr56i"]=asr56i
-
-def asr57(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr57=pd.to_numeric(studydata.asr57,errors='coerce')+1
-    studydata.asr57=asr57.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr57"]=asr57
-
-def asr58(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr58=pd.to_numeric(studydata.asr58,errors='coerce')+1
-    studydata.asr58=asr58.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr58"]=asr58
-
-def asr59(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr59=pd.to_numeric(studydata.asr59,errors='coerce')+1
-    studydata.asr59=asr59.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr59"]=asr59
-
-def asr60(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr60=pd.to_numeric(studydata.asr60,errors='coerce')+1
-    studydata.asr60=asr60.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr60"]=asr60
-
-def asr61(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr61=pd.to_numeric(studydata.asr61,errors='coerce')+1
-    studydata.asr61=asr61.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr61"]=asr61
-
-def asr62(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr62=pd.to_numeric(studydata.asr62,errors='coerce')+1
-    studydata.asr62=asr62.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr62"]=asr62
-
-def asr63(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr63=pd.to_numeric(studydata.asr63,errors='coerce')+1
-    studydata.asr63=asr63.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr63"]=asr63
-
-def asr64(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr64=pd.to_numeric(studydata.asr64,errors='coerce')+1
-    studydata.asr64=asr64.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr64"]=asr64
-
-def asr65(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr65=pd.to_numeric(studydata.asr65,errors='coerce')+1
-    studydata.asr65=asr65.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr65"]=asr65
-
-def asr66(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr66=pd.to_numeric(studydata.asr66,errors='coerce')+1
-    studydata.asr66=asr66.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr66"]=asr66
-
-def asr67(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr67=pd.to_numeric(studydata.asr67,errors='coerce')+1
-    studydata.asr67=asr67.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr67"]=asr67
-
-def asr68(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr68=pd.to_numeric(studydata.asr68,errors='coerce')+1
-    studydata.asr68=asr68.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr68"]=asr68
-
-def asr69(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr69=pd.to_numeric(studydata.asr69,errors='coerce')+1
-    studydata.asr69=asr69.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr69"]=asr69
-
-def asr70(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr70=pd.to_numeric(studydata.asr70,errors='coerce')+1
-    studydata.asr70=asr70.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr70"]=asr70
-
-def asr71(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr71=pd.to_numeric(studydata.asr71,errors='coerce')+1
-    studydata.asr71=asr71.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr71"]=asr71
-
-def asr72(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr72=pd.to_numeric(studydata.asr72,errors='coerce')+1
-    studydata.asr72=asr72.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr72"]=asr72
-
-def asr73(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr73=pd.to_numeric(studydata.asr73,errors='coerce')+1
-    studydata.asr73=asr73.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr73"]=asr73
-
-def asr74(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr74=pd.to_numeric(studydata.asr74,errors='coerce')+1
-    studydata.asr74=asr74.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr74"]=asr74
-
-def asr75(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr75=pd.to_numeric(studydata.asr75,errors='coerce')+1
-    studydata.asr75=asr75.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr75"]=asr75
-
-def asr76(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr76=pd.to_numeric(studydata.asr76,errors='coerce')+1
-    studydata.asr76=asr76.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr76"]=asr76
-
-def asr77(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr77=pd.to_numeric(studydata.asr77,errors='coerce')+1
-    studydata.asr77=asr77.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr77"]=asr77
-
-def asr78(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr78=pd.to_numeric(studydata.asr78,errors='coerce')+1
-    studydata.asr78=asr78.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr78"]=asr78
-
-def asr79(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr79=pd.to_numeric(studydata.asr79,errors='coerce')+1
-    studydata.asr79=asr79.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr79"]=asr79
-
-def asr80(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr80=pd.to_numeric(studydata.asr80,errors='coerce')+1
-    studydata.asr80=asr80.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr80"]=asr80
-
-def asr81(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr81=pd.to_numeric(studydata.asr81,errors='coerce')+1
-    studydata.asr81=asr81.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr81"]=asr81
-
-def asr82(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr82=pd.to_numeric(studydata.asr82,errors='coerce')+1
-    studydata.asr82=asr82.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr82"]=asr82
-
-def asr83(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr83=pd.to_numeric(studydata.asr83,errors='coerce')+1
-    studydata.asr83=asr83.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr83"]=asr83
-
-def asr84(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr84=pd.to_numeric(studydata.asr84,errors='coerce')+1
-    studydata.asr84=asr84.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr84"]=asr84
-
-def asr85(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr85=pd.to_numeric(studydata.asr85,errors='coerce')+1
-    studydata.asr85=asr85.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr85"]=asr85
-
-def asr86(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr86=pd.to_numeric(studydata.asr86,errors='coerce')+1
-    studydata.asr86=asr86.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr86"]=asr86
-
-def asr87(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr87=pd.to_numeric(studydata.asr87,errors='coerce')+1
-    studydata.asr87=asr87.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr87"]=asr87
-
-def asr88(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr88=pd.to_numeric(studydata.asr88,errors='coerce')+1
-    studydata.asr88=asr88.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr88"]=asr88
-
-def asr89(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr89=pd.to_numeric(studydata.asr89,errors='coerce')+1
-    studydata.asr89=asr89.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr89"]=asr89
-
-def asr90(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr90=pd.to_numeric(studydata.asr90,errors='coerce')+1
-    studydata.asr90=asr90.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr90"]=asr90
-
-def asr91(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr91=pd.to_numeric(studydata.asr91,errors='coerce')+1
-    studydata.asr91=asr91.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr91"]=asr91
-
-def asr92(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr92=pd.to_numeric(studydata.asr92,errors='coerce')+1
-    studydata.asr92=asr92.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr92"]=asr92
-
-def asr93(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr93=pd.to_numeric(studydata.asr93,errors='coerce')+1
-    studydata.asr93=asr93.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr93"]=asr93
-
-def asr94(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr94=pd.to_numeric(studydata.asr94,errors='coerce')+1
-    studydata.asr94=asr94.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr94"]=asr94
-
-def asr95(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr95=pd.to_numeric(studydata.asr95,errors='coerce')+1
-    studydata.asr95=asr95.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr95"]=asr95
-
-def asr96(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr96=pd.to_numeric(studydata.asr96,errors='coerce')+1
-    studydata.asr96=asr96.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr96"]=asr96
-
-def asr97(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr97=pd.to_numeric(studydata.asr97,errors='coerce')+1
-    studydata.asr97=asr97.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr97"]=asr97
-
-def asr98(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr98=pd.to_numeric(studydata.asr98,errors='coerce')+1
-    studydata.asr98=asr98.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr98"]=asr98
-
-def asr99(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr99=pd.to_numeric(studydata.asr99,errors='coerce')+1
-    studydata.asr99=asr99.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr99"]=asr99
-
-def asr100(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr100=pd.to_numeric(studydata.asr100,errors='coerce')+1
-    studydata.asr100=asr100.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr100"]=asr100
-
-def asr101(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr101=pd.to_numeric(studydata.asr101,errors='coerce')+1
-    studydata.asr101=asr101.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr101"]=asr101
-
-def asr102(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr102=pd.to_numeric(studydata.asr102,errors='coerce')+1
-    studydata.asr102=asr102.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr102"]=asr102
-
-def asr103(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr103=pd.to_numeric(studydata.asr103,errors='coerce')+1
-    studydata.asr103=asr103.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr103"]=asr103
-
-def asr104(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr104=pd.to_numeric(studydata.asr104,errors='coerce')+1
-    studydata.asr104=asr104.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr104"]=asr104
-
-def asr105(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr105=pd.to_numeric(studydata.asr105,errors='coerce')+1
-    studydata.asr105=asr105.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr105"]=asr105
-
-def asr106(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr106=pd.to_numeric(studydata.asr106,errors='coerce')+1
-    studydata.asr106=asr106.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr106"]=asr106
-
-def asr107(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr107=pd.to_numeric(studydata.asr107,errors='coerce')+1
-    studydata.asr107=asr107.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr107"]=asr107
-
-def asr108(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr108=pd.to_numeric(studydata.asr108,errors='coerce')+1
-    studydata.asr108=asr108.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr108"]=asr108
-
-def asr109(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr109=pd.to_numeric(studydata.asr109,errors='coerce')+1
-    studydata.asr109=asr109.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr109"]=asr109
-
-def asr110(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr110=pd.to_numeric(studydata.asr110,errors='coerce')+1
-    studydata.asr110=asr110.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr110"]=asr110
-
-def asr111(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr111=pd.to_numeric(studydata.asr111,errors='coerce')+1
-    studydata.asr111=asr111.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr111"]=asr111
-
-def asr112(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr112=pd.to_numeric(studydata.asr112,errors='coerce')+1
-    studydata.asr112=asr112.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr112"]=asr112
-
-def asr113(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr113=pd.to_numeric(studydata.asr113,errors='coerce')+1
-    studydata.asr113=asr113.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr113"]=asr113
-
-def asr114(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr114=pd.to_numeric(studydata.asr114,errors='coerce')+1
-    studydata.asr114=asr114.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr114"]=asr114
-
-def asr115(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr115=pd.to_numeric(studydata.asr115,errors='coerce')+1
-    studydata.asr115=asr115.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr115"]=asr115
-
-def asr116(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr116=pd.to_numeric(studydata.asr116,errors='coerce')+1
-    studydata.asr116=asr116.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr116"]=asr116
-
-def asr117(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr117=pd.to_numeric(studydata.asr117,errors='coerce')+1
-    studydata.asr117=asr117.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr117"]=asr117
-
-def asr118(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr118=pd.to_numeric(studydata.asr118,errors='coerce')+1
-    studydata.asr118=asr118.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr118"]=asr118
-
-def asr119(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr119=pd.to_numeric(studydata.asr119,errors='coerce')+1
-    studydata.asr119=asr119.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr119"]=asr119
-
-def asr120(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr120=pd.to_numeric(studydata.asr120,errors='coerce')+1
-    studydata.asr120=asr120.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr120"]=asr120
-
-def asr121(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr121=pd.to_numeric(studydata.asr121,errors='coerce')+1
-    studydata.asr121=asr121.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr121"]=asr121
-
-def asr122(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr122=pd.to_numeric(studydata.asr122,errors='coerce')+1
-    studydata.asr122=asr122.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr122"]=asr122
-
-def asr123(studydata, column, context):
-    """Please increment your 0::2 scale to a 1::3 scale."""
-    asr123=pd.to_numeric(studydata.asr123,errors='coerce')+1
-    studydata.asr123=asr123.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["asr123"]=asr123
+def __increment_0_to_2(studydata, column, context):
+    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
+    return column.replace({0:1,1:2,2:3}).astype('Int64')
+
+fn["asr1"]=__increment_0_to_2
+fn["asr2"]=__increment_0_to_2
+fn["asr3"]=__increment_0_to_2
+fn["asr4"]=__increment_0_to_2
+fn["asr5"]=__increment_0_to_2
+fn["asr6"]=__increment_0_to_2
+fn["asr7"]=__increment_0_to_2
+fn["asr8"]=__increment_0_to_2
+fn["asr9"]=__increment_0_to_2
+fn["asr10"]=__increment_0_to_2
+fn["asr11"]=__increment_0_to_2
+fn["asr12"]=__increment_0_to_2
+fn["asr13"]=__increment_0_to_2
+fn["asr14"]=__increment_0_to_2
+fn["asr15"]=__increment_0_to_2
+fn["asr16"]=__increment_0_to_2
+fn["asr17"]=__increment_0_to_2
+fn["asr18"]=__increment_0_to_2
+fn["asr19"]=__increment_0_to_2
+fn["asr20"]=__increment_0_to_2
+fn["asr21"]=__increment_0_to_2
+fn["asr22"]=__increment_0_to_2
+
+"""Please rename this column 'asr4_5' to avoid a naming conflict in our database.  Please increment your 0::2 scale to a 1::3 scale."""
+fn["asr23"]=__increment_0_to_2
+
+"""Please rename this column 'asr4_6' to avoid a naming conflict in our database.Please increment your 0::2 scale to a 1::3 scale."""
+fn["asr24"]=__increment_0_to_2
+
+"""Please rename this column 'asr5_1' to avoid a naming conflict in our database.Please increment your 0::2 scale to a 1::3 scale."""
+fn["asr25"]=__increment_0_to_2
+
+fn["asr26"]=__increment_0_to_2
+fn["asr27"]=__increment_0_to_2
+fn["asr28"]=__increment_0_to_2
+fn["asr29"]=__increment_0_to_2
+fn["asr30"]=__increment_0_to_2
+fn["asr31"]=__increment_0_to_2
+fn["asr32"]=__increment_0_to_2
+fn["asr33"]=__increment_0_to_2
+fn["asr34"]=__increment_0_to_2
+fn["asr35"]=__increment_0_to_2
+fn["asr36"]=__increment_0_to_2
+fn["asr37"]=__increment_0_to_2
+
+"""Please rename this column 'asr7_2' to avoid a naming conflict in our database.  Please increment your 0::2 scale to a 1::3 scale."""
+fn["asr38"]=__increment_0_to_2
+
+fn["asr39"]=__increment_0_to_2
+fn["asr40"]=__increment_0_to_2
+fn["asr41"]=__increment_0_to_2
+fn["asr42"]=__increment_0_to_2
+fn["asr43"]=__increment_0_to_2
+fn["asr44"]=__increment_0_to_2
+fn["asr45"]=__increment_0_to_2
+fn["asr46"]=__increment_0_to_2
+fn["asr47"]=__increment_0_to_2
+fn["asr48"]=__increment_0_to_2
+fn["asr49"]=__increment_0_to_2
+fn["asr50"]=__increment_0_to_2
+fn["asr51"]=__increment_0_to_2
+fn["asr52"]=__increment_0_to_2
+fn["asr53"]=__increment_0_to_2
+fn["asr54"]=__increment_0_to_2
+fn["asr55"]=__increment_0_to_2
+fn["asr56a"]=__increment_0_to_2
+fn["asr56b"]=__increment_0_to_2
+fn["asr56c"]=__increment_0_to_2
+fn["asr56d"]=__increment_0_to_2
+fn["asr56e"]=__increment_0_to_2
+fn["asr56f"]=__increment_0_to_2
+fn["asr56g"]=__increment_0_to_2
+fn["asr56h"]=__increment_0_to_2
+fn["asr56i"]=__increment_0_to_2
+fn["asr57"]=__increment_0_to_2
+fn["asr58"]=__increment_0_to_2
+fn["asr59"]=__increment_0_to_2
+fn["asr60"]=__increment_0_to_2
+fn["asr61"]=__increment_0_to_2
+fn["asr62"]=__increment_0_to_2
+fn["asr63"]=__increment_0_to_2
+fn["asr64"]=__increment_0_to_2
+fn["asr65"]=__increment_0_to_2
+fn["asr66"]=__increment_0_to_2
+fn["asr67"]=__increment_0_to_2
+fn["asr68"]=__increment_0_to_2
+fn["asr69"]=__increment_0_to_2
+fn["asr70"]=__increment_0_to_2
+fn["asr71"]=__increment_0_to_2
+fn["asr72"]=__increment_0_to_2
+fn["asr73"]=__increment_0_to_2
+fn["asr74"]=__increment_0_to_2
+fn["asr75"]=__increment_0_to_2
+fn["asr76"]=__increment_0_to_2
+fn["asr77"]=__increment_0_to_2
+fn["asr78"]=__increment_0_to_2
+fn["asr79"]=__increment_0_to_2
+fn["asr80"]=__increment_0_to_2
+fn["asr81"]=__increment_0_to_2
+fn["asr82"]=__increment_0_to_2
+fn["asr83"]=__increment_0_to_2
+fn["asr84"]=__increment_0_to_2
+fn["asr85"]=__increment_0_to_2
+fn["asr86"]=__increment_0_to_2
+fn["asr87"]=__increment_0_to_2
+fn["asr88"]=__increment_0_to_2
+fn["asr89"]=__increment_0_to_2
+fn["asr90"]=__increment_0_to_2
+fn["asr91"]=__increment_0_to_2
+fn["asr92"]=__increment_0_to_2
+fn["asr93"]=__increment_0_to_2
+fn["asr94"]=__increment_0_to_2
+fn["asr95"]=__increment_0_to_2
+fn["asr96"]=__increment_0_to_2
+fn["asr97"]=__increment_0_to_2
+fn["asr98"]=__increment_0_to_2
+fn["asr99"]=__increment_0_to_2
+fn["asr100"]=__increment_0_to_2
+fn["asr101"]=__increment_0_to_2
+fn["asr102"]=__increment_0_to_2
+fn["asr103"]=__increment_0_to_2
+fn["asr104"]=__increment_0_to_2
+fn["asr105"]=__increment_0_to_2
+fn["asr106"]=__increment_0_to_2
+fn["asr107"]=__increment_0_to_2
+fn["asr108"]=__increment_0_to_2
+fn["asr109"]=__increment_0_to_2
+fn["asr110"]=__increment_0_to_2
+fn["asr111"]=__increment_0_to_2
+fn["asr112"]=__increment_0_to_2
+fn["asr113"]=__increment_0_to_2
+fn["asr114"]=__increment_0_to_2
+fn["asr115"]=__increment_0_to_2
+fn["asr116"]=__increment_0_to_2
+fn["asr117"]=__increment_0_to_2
+fn["asr118"]=__increment_0_to_2
+fn["asr119"]=__increment_0_to_2
+fn["asr120"]=__increment_0_to_2
+fn["asr121"]=__increment_0_to_2
+fn["asr122"]=__increment_0_to_2
+fn["asr123"]=__increment_0_to_2
 
 def height(studydata, column, context):
     """Please convert heights to inches."""
@@ -1254,9 +610,6 @@ def ale1(studydata, column, context):
     pass
 fn["ale1"]=ale1
 
-def __increment_0_to_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    return column.replace({0:1,1:2,2:3})
 
 fn["ale1_2"]=__increment_0_to_2
 fn["ale2_2"]=__increment_0_to_2

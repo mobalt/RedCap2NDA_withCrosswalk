@@ -1328,8 +1328,8 @@ fn["nida_y_drug10"]=__recode_1_2_as_yes_no
 
 def pds_sub_score(studydata, column, context):
     """Please split this column into two separate columns. Male participants' data can go to 'pds_pv_boy_tanner'. Female participants' data belong in 'pds_pv_girl_tanner'."""
-    studydata['pds_pv_boy_tanner']=studydata.pds_sub_score
-    studydata.loc[studydata.gender=='F','pds_pv_boy_tanner']=''
+    studydata['pds_pv_girl_tanner'] = column.where(studydata.gender=='F')
+    studydata['pds_pv_boy_tanner'] = column.where(studydata.gender=='M')
 fn["pds_sub_score"]=pds_sub_score
 
 def mstrl_sub1a(studydata, column, context):

@@ -1344,11 +1344,11 @@ def mstrl_sub1b(studydata, column, context):
     studydata.loc[studydata.mstrl_sub1b=='2','mstrl_sub1b']='No hyperthyroidism'
 fn["mstrl_sub1b"]=mstrl_sub1b
 
-def mstrl_sub1c_age(studydata, column, context):
+def __prepend_age_at_onset(studydata, column, context):
     """Please prepend "Age at onset: " to ages."""
-    studydata['newstring']='Age at onset: '+studydata.mstrl_sub1c_age
-    studydata.loc[studydata.mstrl_sub1c_age=='','newstring']=''
-fn["mstrl_sub1c_age"]=mstrl_sub1c_age
+    return column.mask(column.notna(), 'Age at onset: ' + column.astype(str))
+
+fn["mstrl_sub1c_age"]=__prepend_age_at_onset
 
 def dummy_var13(studydata, column, context):
     """Please indicate "Short Form" for each row using the column 'version_form'."""
@@ -1684,10 +1684,11 @@ def mstrl_p1b(studydata, column, context):
     pass
 fn["mstrl_p1b"]=mstrl_p1b
 
-def mstrl_p1c_age(studydata, column, context):
+def __prepend_onset(studydata, column, context):
     """Please prepend "Onset: " to ages."""
-    pass
-fn["mstrl_p1c_age"]=mstrl_p1c_age
+    return column.mask(column.notna(), 'Onset: ' + column.astype(str))
+
+fn["mstrl_p1c_age"]=__prepend_onset
 
 def upps_p1(studydata, column, context):
     """Please rename this column 'phenx_upps_p_1' to avoid a naming conflict. Also, please reverse code this column."""

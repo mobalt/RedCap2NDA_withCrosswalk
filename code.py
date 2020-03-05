@@ -1254,176 +1254,35 @@ def ale1(studydata, column, context):
     pass
 fn["ale1"]=ale1
 
-def ale1_2(studydata, column, context):
+def __increment_0_to_2(studydata, column, context):
     """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale1_2=studydata.ale1_2.replace({0:1,1:2,2:3})
-fn["ale1_2"]=ale1_2
+    return column.replace({0:1,1:2,2:3})
 
-def ale2_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale2_2=studydata.ale2_2.replace({0:1,1:2,2:3})
-fn["ale2_2"]=ale2_2
-
-def ale3_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale3_2=studydata.ale3_2.str.replace('2','3')
-    studydata.ale3_2.str.replace('1','2')
-    studydata.ale3_2.str.replace('0','1')
-fn["ale3_2"]=ale3_2
-
-def ale4_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale4_2=studydata.ale4_2.str.replace('2','3')
-    studydata.ale4_2.str.replace('1','2')
-    studydata.ale4_2.str.replace('0','1')
-fn["ale4_2"]=ale4_2
-
-def ale5_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale5_2=studydata.ale5_2.str.replace('2','3')
-    studydata.ale5_2.str.replace('1','2')
-    studydata.ale5_2.str.replace('0','1')
-fn["ale5_2"]=ale5_2
-
-def ale6_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale6_2=studydata.ale6_2.str.replace('2','3')
-    studydata.ale6_2.str.replace('1','2')
-    studydata.ale6_2.str.replace('0','1')
-fn["ale6_2"]=ale6_2
-
-def ale7_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale7_2=studydata.ale7_2.str.replace('2','3')
-    studydata.ale7_2.str.replace('1','2')
-    studydata.ale7_2.str.replace('0','1')
-fn["ale7_2"]=ale7_2
-
-def ale8_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale8_2=studydata.ale8_2.str.replace('2','3')
-    studydata.ale8_2.str.replace('1','2')
-    studydata.ale8_2.str.replace('0','1')
-fn["ale8_2"]=ale8_2
-
-def ale9_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale9_2=studydata.ale9_2.str.replace('2','3')
-    studydata.ale9_2.str.replace('1','2')
-    studydata.ale9_2.str.replace('0','1')
-fn["ale9_2"]=ale9_2
-
-def ale10_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale10_2=studydata.ale10_2.str.replace('2','3')
-    studydata.ale10_2.str.replace('1','2')
-    studydata.ale10_2.str.replace('0','1')
-fn["ale10_2"]=ale10_2
-
-def ale11_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale11_2=studydata.ale11_2.str.replace('2','3')
-    studydata.ale11_2.str.replace('1','2')
-    studydata.ale11_2.str.replace('0','1')
-fn["ale11_2"]=ale11_2
-
-def ale12_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale12_2=studydata.ale12_2.str.replace('2','3')
-    studydata.ale12_2.str.replace('1','2')
-    studydata.ale12_2.str.replace('0','1')
-fn["ale12_2"]=ale12_2
-
-def ale13_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale13_2=studydata.ale13_2.str.replace('2','3')
-    studydata.ale13_2.str.replace('1','2')
-    studydata.ale13_2.str.replace('0','1')
-fn["ale13_2"]=ale13_2
-
-def ale14_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale14_2=studydata.ale14_2.str.replace('2','3')
-    studydata.ale14_2.str.replace('1','2')
-    studydata.ale14_2.str.replace('0','1')
-fn["ale14_2"]=ale14_2
-
-def ale15_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale15_2=studydata.ale15_2.str.replace('2','3')
-    studydata.ale15_2.str.replace('1','2')
-    studydata.ale15_2.str.replace('0','1')
-fn["ale15_2"]=ale15_2
-
-def ale16_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale16_2=studydata.ale16_2.str.replace('2','3')
-    studydata.ale16_2.str.replace('1','2')
-    studydata.ale16_2.str.replace('0','1')
-fn["ale16_2"]=ale16_2
-
-def ale17_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale17_2=studydata.ale17_2.str.replace('2','3')
-    studydata.ale17_2.str.replace('1','2')
-    studydata.ale17_2.str.replace('0','1')
-fn["ale17_2"]=ale17_2
-
-def ale18_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale18_2=studydata.ale18_2.str.replace('2','3')
-    studydata.ale18_2.str.replace('1','2')
-    studydata.ale18_2.str.replace('0','1')
-fn["ale18_2"]=ale18_2
-
-def ale19_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale19_2=studydata.ale19_2.str.replace('2','3')
-    studydata.ale19_2.str.replace('1','2')
-    studydata.ale19_2.str.replace('0','1')
-fn["ale19_2"]=ale19_2
-
-def ale20_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale20_2=studydata.ale20_2.str.replace('2','3')
-    studydata.ale20_2.str.replace('1','2')
-    studydata.ale20_2.str.replace('0','1')
-fn["ale20_2"]=ale20_2
-
-def ale21_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale21_2=studydata.ale21_2.str.replace('2','3')
-    studydata.ale21_2.str.replace('1','2')
-    studydata.ale21_2.str.replace('0','1')
-fn["ale21_2"]=ale21_2
-
-def ale22_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale22_2=studydata.ale22_2.str.replace('2','3')
-    studydata.ale22_2.str.replace('1','2')
-    studydata.ale22_2.str.replace('0','1')
-fn["ale22_2"]=ale22_2
-
-def ale23_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale23_2=studydata.ale23_2.str.replace('2','3')
-    studydata.ale23_2.str.replace('1','2')
-    studydata.ale23_2.str.replace('0','1')
-fn["ale23_2"]=ale23_2
-
-def ale24_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale24_2=studydata.ale24_2.str.replace('2','3')
-    studydata.ale24_2.str.replace('1','2')
-    studydata.ale24_2.str.replace('0','1')
-fn["ale24_2"]=ale24_2
-
-def ale25_2(studydata, column, context):
-    """Please increment codes of 0, 1, and 2, but leave code 4 as it is."""
-    studydata.ale25_2=studydata.ale25_2.str.replace('2','3')
-    studydata.ale25_2.str.replace('1','2')
-    studydata.ale25_2.str.replace('0','1')
-fn["ale25_2"]=ale25_2
+fn["ale1_2"]=__increment_0_to_2
+fn["ale2_2"]=__increment_0_to_2
+fn["ale3_2"]=__increment_0_to_2
+fn["ale4_2"]=__increment_0_to_2
+fn["ale5_2"]=__increment_0_to_2
+fn["ale6_2"]=__increment_0_to_2
+fn["ale7_2"]=__increment_0_to_2
+fn["ale8_2"]=__increment_0_to_2
+fn["ale9_2"]=__increment_0_to_2
+fn["ale10_2"]=__increment_0_to_2
+fn["ale11_2"]=__increment_0_to_2
+fn["ale12_2"]=__increment_0_to_2
+fn["ale13_2"]=__increment_0_to_2
+fn["ale14_2"]=__increment_0_to_2
+fn["ale15_2"]=__increment_0_to_2
+fn["ale16_2"]=__increment_0_to_2
+fn["ale17_2"]=__increment_0_to_2
+fn["ale18_2"]=__increment_0_to_2
+fn["ale19_2"]=__increment_0_to_2
+fn["ale20_2"]=__increment_0_to_2
+fn["ale21_2"]=__increment_0_to_2
+fn["ale22_2"]=__increment_0_to_2
+fn["ale23_2"]=__increment_0_to_2
+fn["ale24_2"]=__increment_0_to_2
+fn["ale25_2"]=__increment_0_to_2
 
 def dummy_var16(studydata, column, context):
     """Please use the 'version_form' column to label each row "Past year"."""
@@ -1432,20 +1291,21 @@ fn["dummy_var16"]=dummy_var16
 
 def nida_y_tobaco3(studydata, column, context):
     """Please recode 999 as 97."""
-    studydata.nida_y_tobaco3=studydata.nida_y_tobaco3.str.replace('999','97')
+    return column.replace({999: 97})
 fn["nida_y_tobaco3"]=nida_y_tobaco3
 
 def nida_y_tobaco6b(studydata, column, context):
     """Please recode 3 as 2 and 6 as 3."""
-    studydata.nida_y_tobaco6b=studydata.nida_y_tobaco6b.str.replace('3','2')
-    studydata.nida_y_tobaco6b.str.replace('6','3')
+    return column.replace({3: 2, 6: 3})
 fn["nida_y_tobaco6b"]=nida_y_tobaco6b
 
 def nida_y_tobaco7(studydata, column, context):
     """Please recode 1 as 2, 2 as 3, and 6 as 4."""
-    studydata.nida_y_tobaco7=studydata.nida_y_tobaco7.str.replace('6','4')
-    studydata.nida_y_tobaco7=studydata.nida_y_tobaco7.str.replace('2','3')
-    studydata.nida_y_tobaco7=studydata.nida_y_tobaco7.str.replace('1','2')
+    return column.replace({
+        1: 2,
+        2: 3,
+        6: 4,
+    })
 fn["nida_y_tobaco7"]=nida_y_tobaco7
 
 def nida_y_drug1(studydata, column, context):

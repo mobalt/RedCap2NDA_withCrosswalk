@@ -896,7 +896,7 @@ HCPD,REDCap,hcpdchild hcpd18,,upps_prsv,,,,upps01,persev_score,,,,,,,,,,,,,True,
 HCPD,REDCap,hcpdchild hcpd18,,dummy_var13,,,,upps01,version_form,,,,,,,"Please indicate ""Short Form"" for each row using the column 'version_form'.",version_form,,studydata['version_form']='Short Form',,,,,
 HCPD,REDCap,hcpdparent,,upps_p1,,,,,,,,,,,,,,"5-16 year olds  parent report, >=8 year old child report",,,,False,True,False
 HCPD,REDCap,hcpdparent,,upps_p2,,,,,,,,,,,,,,"5-16 year olds  parent report, >=8 year old child report",,,,False,True,False
-HCPD,REDCap,hcpdparent,,upps_p3,,,,,,,,,,,,,  ,"5-16 year olds  parent report, >=8 year old child report",,,,False,True,False
+HCPD,REDCap,hcpdparent,,upps_p3,,,,,,,,,,,,,,"5-16 year olds  parent report, >=8 year old child report",,,,False,True,False
 HCPD,REDCap,hcpdparent,,upps_p4,,,,,,,,,,,,,,"5-16 year olds  parent report, >=8 year old child report",,,,False,True,False
 HCPD,REDCap,hcpdparent,,upps_p5,,,,,,,,,,,,,,"5-16 year olds  parent report, >=8 year old child report",,,,False,True,False
 HCPD,REDCap,hcpdparent,,upps_p6,,,,,,,,,,,,,,"5-16 year olds  parent report, >=8 year old child report",,,,False,True,False

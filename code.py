@@ -160,10 +160,11 @@ def colorvsn1(studydata, column, context):
     studydata.colorvsn1 = studydata.colorvsn1.mask(studydata.colorvsn1 == 0, 'No').mask(studydata.colorvsn1 > 90, "Don't Know")
 fn["colorvsn1"]=colorvsn1
 
-def sub_adopt_1unit(studydata, column, context):
+def sub_adopt_1(studydata, column, context):
     """Age at adoption is a free-text field. Please concatenate responses from 'sub_adopt_1' and 'sub_adopt_1unit' in the 'sub_adopt_1' column."""
-    pass
-fn["sub_adopt_1unit"]=sub_adopt_1unit
+
+    return column.astype('Int64').astype(str) + studydata.sub_adopt_1unit.replace({1: ' Months', 2: ' Years'})
+fn["sub_adopt_1"]=sub_adopt_1
 
 def __convert_country_code_to_text(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""

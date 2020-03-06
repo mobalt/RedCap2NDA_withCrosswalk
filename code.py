@@ -33,16 +33,9 @@ fn["asr19"]=__increment_0_to_2
 fn["asr20"]=__increment_0_to_2
 fn["asr21"]=__increment_0_to_2
 fn["asr22"]=__increment_0_to_2
-
-"""Please rename this column 'asr4_5' to avoid a naming conflict in our database.  Please increment your 0::2 scale to a 1::3 scale."""
 fn["asr23"]=__increment_0_to_2
-
-"""Please rename this column 'asr4_6' to avoid a naming conflict in our database.Please increment your 0::2 scale to a 1::3 scale."""
 fn["asr24"]=__increment_0_to_2
-
-"""Please rename this column 'asr5_1' to avoid a naming conflict in our database.Please increment your 0::2 scale to a 1::3 scale."""
 fn["asr25"]=__increment_0_to_2
-
 fn["asr26"]=__increment_0_to_2
 fn["asr27"]=__increment_0_to_2
 fn["asr28"]=__increment_0_to_2
@@ -55,10 +48,7 @@ fn["asr34"]=__increment_0_to_2
 fn["asr35"]=__increment_0_to_2
 fn["asr36"]=__increment_0_to_2
 fn["asr37"]=__increment_0_to_2
-
-"""Please rename this column 'asr7_2' to avoid a naming conflict in our database.  Please increment your 0::2 scale to a 1::3 scale."""
 fn["asr38"]=__increment_0_to_2
-
 fn["asr39"]=__increment_0_to_2
 fn["asr40"]=__increment_0_to_2
 fn["asr41"]=__increment_0_to_2
@@ -229,7 +219,6 @@ fn["sub_fgrade"]=sub_fgrade
 
 def dummy_var14(studydata, column, context):
     """Please specify a time range of "Past 4 weeks" for all records."""
-    print('performed dummy_var14')
     studydata['version_form']='Past 4 weeks'
 fn["dummy_var14"]=dummy_var14
 

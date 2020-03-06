@@ -512,55 +512,20 @@ def family_income(studydata, column, context):
     pass
 fn["family_income"]=family_income
 
-def psqi5a(studydata, column, context):
+def __increment_0_3_to_1_4(studydata, column, context):
     """Please increment your 0::3 scale to a 1::4 scale."""
-    pass
-fn["psqi5a"]=psqi5a
+    return column.replace({0:1, 1:2, 2:3, 3:4})
 
-def psqi5b(studydata, column, context):
-    """Please increment your 0::3 scale to a 1::4 scale."""
-    pass
-fn["psqi5b"]=psqi5b
-
-def psqi5c(studydata, column, context):
-    """Please increment your 0::3 scale to a 1::4 scale."""
-    pass
-fn["psqi5c"]=psqi5c
-
-def psqi5d(studydata, column, context):
-    """Please increment your 0::3 scale to a 1::4 scale."""
-    pass
-fn["psqi5d"]=psqi5d
-
-def psqi5e(studydata, column, context):
-    """Please increment your 0::3 scale to a 1::4 scale."""
-    pass
-fn["psqi5e"]=psqi5e
-
-def psqi5f(studydata, column, context):
-    """Please increment your 0::3 scale to a 1::4 scale."""
-    pass
-fn["psqi5f"]=psqi5f
-
-def psqi5g(studydata, column, context):
-    """Please increment your 0::3 scale to a 1::4 scale."""
-    pass
-fn["psqi5g"]=psqi5g
-
-def psqi5h(studydata, column, context):
-    """Please increment your 0::3 scale to a 1::4 scale."""
-    pass
-fn["psqi5h"]=psqi5h
-
-def psqi5i(studydata, column, context):
-    """Please increment your 0::3 scale to a 1::4 scale."""
-    pass
-fn["psqi5i"]=psqi5i
-
-def psqi5j_2(studydata, column, context):
-    """Please increment your 0::3 scale to a 1::4 scale and rename this column 'psqi6b_5'."""
-    pass
-fn["psqi5j_2"]=psqi5j_2
+fn["psqi5a"]=__increment_0_3_to_1_4
+fn["psqi5b"]=__increment_0_3_to_1_4
+fn["psqi5c"]=__increment_0_3_to_1_4
+fn["psqi5d"]=__increment_0_3_to_1_4
+fn["psqi5e"]=__increment_0_3_to_1_4
+fn["psqi5f"]=__increment_0_3_to_1_4
+fn["psqi5g"]=__increment_0_3_to_1_4
+fn["psqi5h"]=__increment_0_3_to_1_4
+fn["psqi5i"]=__increment_0_3_to_1_4
+fn["psqi5j_2"]=__increment_0_3_to_1_4
 
 def devhx_8_prescript_med(studydata, column, context):
     """Please recode 0 as 999 (for "Don't Know")."""

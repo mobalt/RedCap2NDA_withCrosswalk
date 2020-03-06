@@ -35,7 +35,7 @@ ndar = ndar[ndar.subjectped.str.contains('HCD')]
 structures = red.drop_duplicates('nda_structure')
 normals = structures[structures.source.str.contains('REDCap') & structures.specialty_code.isnull()]
 
-normals.nda_structure
+'Structures to traverse in for-loop: '+', '.join(normals.nda_structure)
 
 cols_of_interest = ['nda_structure', 'nda_element', 'hcp_variable', 'source',
          'action_request', 'hcp_variable_upload', 'requested_python']
@@ -64,9 +64,6 @@ for structure in normals.nda_structure:
 
 #     if structure == 'vitals01':
 #         studydata = cw.extraheightcleanvar(studydata)
-
-    # remove withdrawn or flagged participants
-    studydata = studydata[studydata.flagged.isna()]
 
     pathstructuresout = "./prepped_structures"
     studystr = 'hcpd'

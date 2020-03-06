@@ -232,37 +232,21 @@ def __decrement_1_5_to_0_4(studydata, column, context):
     #return n.fillna(-99).astype(int).astype(str).str.replace('-99','')
     return column.replace({5: 4, 4: 3, 3: 2, 2: 1, 1: 0})
 
-def neo3(studydata, column, context):
-    """Please decrement your 1::5 scale to a 0::4 scale, reverse-coding where the manual calls for it, and recalculating scores accordingly."""
-    neo3=4-(pd.to_numeric(studydata.neo3,errors='coerce')-1)
-    studydata.neo3=neo3.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["neo3"]=neo3
 
-def neo8(studydata, column, context):
+def __decrement_1_5_to_0_4_then_reverse_code(studydata, column, context):
     """Please decrement your 1::5 scale to a 0::4 scale, reverse-coding where the manual calls for it, and recalculating scores accordingly."""
-    neo8=4-(pd.to_numeric(studydata.neo8,errors='coerce')-1)
-    studydata.neo8=neo8.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["neo8"]=neo8
-
-def neo29(studydata, column, context):
-    """Please decrement your 1::5 scale to a 0::4 scale, reverse-coding where the manual calls for it, and recalculating scores accordingly."""
-    neo29=4-(pd.to_numeric(studydata.neo29,errors='coerce')-1)
-    studydata.neo29=neo29.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["neo29"]=neo29
-
-def neo38(studydata, column, context):
-    """Please decrement your 1::5 scale to a 0::4 scale, reverse-coding where the manual calls for it, and recalculating scores accordingly."""
-    neo38=4-(pd.to_numeric(studydata.neo38,errors='coerce')-1)
-    studydata.neo38=neo38.fillna(-99).astype(int).astype(str).str.replace('-99','')
-fn["neo38"]=neo38
-
+    #neo3=4-(pd.to_numeric(studydata.neo3,errors='coerce')-1)
+    #studydata.neo3=neo3.fillna(-99).astype(int).astype(str).str.replace('-99','')
+    return column.replace({5:0, 4: 1, 3: 2, 2: 3, 1: 4})
 
 fn["neo1"]=__decrement_1_5_to_0_4
 fn["neo2"]=__decrement_1_5_to_0_4
+fn["neo3"]=__decrement_1_5_to_0_4_then_reverse_code
 fn["neo4"]=__decrement_1_5_to_0_4
 fn["neo5"]=__decrement_1_5_to_0_4
 fn["neo6"]=__decrement_1_5_to_0_4
 fn["neo7"]=__decrement_1_5_to_0_4
+fn["neo8"]=__decrement_1_5_to_0_4_then_reverse_code
 fn["neo9"]=__decrement_1_5_to_0_4
 fn["neo10"]=__decrement_1_5_to_0_4
 fn["neo11"]=__decrement_1_5_to_0_4
@@ -283,6 +267,7 @@ fn["neo25"]=__decrement_1_5_to_0_4
 fn["neo26"]=__decrement_1_5_to_0_4
 fn["neo27"]=__decrement_1_5_to_0_4
 fn["neo28"]=__decrement_1_5_to_0_4
+fn["neo29"]=__decrement_1_5_to_0_4_then_reverse_code
 fn["neo30"]=__decrement_1_5_to_0_4
 fn["neo31"]=__decrement_1_5_to_0_4
 fn["neo32"]=__decrement_1_5_to_0_4
@@ -291,6 +276,7 @@ fn["neo34"]=__decrement_1_5_to_0_4
 fn["neo35"]=__decrement_1_5_to_0_4
 fn["neo36"]=__decrement_1_5_to_0_4
 fn["neo37"]=__decrement_1_5_to_0_4
+fn["neo38"]=__decrement_1_5_to_0_4_then_reverse_code
 fn["neo39"]=__decrement_1_5_to_0_4
 fn["neo40"]=__decrement_1_5_to_0_4
 fn["neo41"]=__decrement_1_5_to_0_4

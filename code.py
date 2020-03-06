@@ -601,11 +601,6 @@ def dummy_var15(studydata, column, context):
     studydata['version_form']='S7up Self Report'
 fn["dummy_var15"]=dummy_var15
 
-def ale1(studydata, column, context):
-    """ """
-    pass
-fn["ale1"]=ale1
-
 
 fn["ale1_2"]=__increment_0_to_2
 fn["ale2_2"]=__increment_0_to_2

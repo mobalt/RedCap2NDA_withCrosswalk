@@ -224,10 +224,11 @@ fn["dummy_var14"]=dummy_var14
 
 def mctq_free9(studydata, column, context):
     """Please combine mctq_free9 and mctq_free10 under one column (either name would be fine). Please also convert mctq_free9's numeric codes to the text strings they represent."""
-    studydata['mctq_free9']=studydata.mctq_free9.astype(str)
-    studydata['mctq_free9']=studydata.mctq_free9.str.replace('1','Familymembers/pet(s)')
-    studydata['mctq_free9']=studydata.mctq_free9.str.replace('2','Hobbies')
-    studydata['mctq_free9']=studydata.mctq_free9.str.replace('3','Other: ')
+    return column.replace({
+        1: 'Familymembers/pet(s)',
+        2: 'Hobbies',
+        3: 'Other: ',
+    })
 fn["mctq_free9"]=mctq_free9
 
 def mctq_free10(studydata, column, context):
@@ -682,14 +683,18 @@ fn["pds_sub_score"]=pds_sub_score
 
 def mstrl_sub1a(studydata, column, context):
     """Please change numeric codes to the text strings they represent."""
-    studydata.loc[studydata.mstrl_sub1a=='1','mstrl_sub1a']='Hypothyroidism'
-    studydata.loc[studydata.mstrl_sub1a=='2','mstrl_sub1a']='No hypothyroidism'
+    return column.replace({
+        1: 'Hypothyroidism',
+        2: 'No hypothyroidism'
+    })
 fn["mstrl_sub1a"]=mstrl_sub1a
 
 def mstrl_sub1b(studydata, column, context):
     """Please change numeric codes to the text strings they represent."""
-    studydata.loc[studydata.mstrl_sub1b=='1','mstrl_sub1b']='Hyperthyroidism'
-    studydata.loc[studydata.mstrl_sub1b=='2','mstrl_sub1b']='No hyperthyroidism'
+    return column.replace({
+        1: 'Hypothyroidism',
+        2: 'No hypothyroidism'
+    })
 fn["mstrl_sub1b"]=mstrl_sub1b
 
 def __prepend_age_at_onset(studydata, column, context):

@@ -74,15 +74,16 @@ for structure in normals.nda_structure:
     crosswalk_subset = crosswalk[crosswalk.hcp_variable.isin(variables)][cols_of_interest]
 
     for in_name, out_name in crosswalk_subset.loc[crosswalk_subset.hcp_variable.isin(list(fn.keys())), ['hcp_variable', 'hcp_variable_upload']].to_records(False):
+        in_column = studydata[in_name] if in_name in studydata else None
+
         if in_name in fn:
-            print({'name': in_name}, inspect.getsource(fn[in_name]))
-            in_column = studydata[in_name] if in_name in studydata else None
+            # print({'name': in_name}, inspect.getsource(fn[in_name]))
 
             result = fn[in_name](studydata, in_column, {'name': in_name})
             if result is not None and out_name:
                 studydata[out_name] = result
-
-
+        else:
+            studydata[out_name] = in_column
 
     # for livewire in crosswalk_subset.requested_python[crosswalk_subset.requested_python.notna()]:
     #     print(livewire)

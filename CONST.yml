@@ -294,3 +294,12 @@ working_status:
   '6': TAKING CARE OF CHILDREN AND/OR RAISING CHILDREN AND/OR CARING FOR AGING PARENTS
   '7': STUDENT
   '8': 'OTHER: '
+gender:
+  '1': MALE
+  '2': FEMALE
+  '3': Trans male/Trans man
+  '4': Trans female/Trans woman
+  '5': Genderqueer/Gender non-conforming
+  '6': 'Different identity:'
+  '7': REFUSED
+  '8': DONT KNOW

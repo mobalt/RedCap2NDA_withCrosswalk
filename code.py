@@ -172,10 +172,10 @@ def __convert_country_code_to_text(studydata, column, context):
 
 fn["sub_country"]=__convert_country_code_to_text
 
-def sub_gender_different(studydata, column, context):
+def sub_gender(studydata, column, context):
     """Gender identity is a free-text field. Please concatenate responses from 'sub_gender' and 'sub_gender_different' in the 'sub_gender' column."""
-    pass
-fn["sub_gender_different"]=sub_gender_different
+    return column.astype(str).replace(CONST.gender) + studydata.sub_gender_different
+fn["sub_gender"]=sub_gender
 
 def sub_marriage(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""

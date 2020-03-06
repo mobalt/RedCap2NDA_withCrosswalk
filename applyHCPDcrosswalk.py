@@ -70,17 +70,23 @@ for structure in normals.nda_structure:
 
     crosswalk_subset = crosswalk[crosswalk.hcp_variable.isin(variables)][cols_of_interest]
 
-    for x, y in crosswalk_subset.loc[crosswalk_subset.hcp_variable.isin(list(fn.keys())), ['hcp_variable', 'hcp_variable_upload']].to_records(False):
-        X = studydata[x] if x in studydata else None
-
+    for x, y in crosswalk_subset[['hcp_variable', 'hcp_variable_upload']].to_records(False):
+        if not y:
+            y = x
         if x in fn:
             # print({'name': x}, inspect.getsource(fn[x]))
 
+            # handle dummy vars
+            X = studydata[x] if x in studydata else None
             result = fn[x](studydata, X, {'name': x})
             if result is not None and y:
                 studydata[y] = result
+        elif x in studydata:
+            studydata[y] = studydata[x]
         else:
-            studydata[y] = X
+            # dummy var doesn't actually exist as input
+            pass
+
 
     # for livewire in crosswalk_subset.requested_python[crosswalk_subset.requested_python.notna()]:
     #     print(livewire)

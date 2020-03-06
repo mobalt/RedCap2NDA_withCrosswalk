@@ -157,7 +157,7 @@ fn['bpressure'] = bpressure
 
 def colorvsn1(studydata, column, context):
     """Please convert numeric codes of 0 and 99 to the text strings they represent."""
-    studydata.colorvsn1 = studydata.colorvsn1.mask(studydata.colorvsn1 == 0, 'No').mask(studydata.colorvsn1 > 90, "Don't Know")
+    return column.mask(column == 0, 'No').mask(column > 90, "Don't Know")
 fn["colorvsn1"]=colorvsn1
 
 def sub_adopt_1(studydata, column, context):
@@ -180,12 +180,12 @@ fn["sub_gender"]=sub_gender
 
 def sub_marriage(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    studydata['sub_marriage']=studydata.sub_marriage.astype(str).replace(CONST.marriage_status)
+    return column.replace(CONST.marriage_status)
 fn["sub_marriage"]=sub_marriage
 
 def sub_grade(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    studydata['sub_grade']=studydata.sub_grade.astype(str).replace(CONST.education)
+    return column.replace(CONST.education)
 fn["sub_grade"]=sub_grade
 
 def sub_job(studydata, column, context):
@@ -200,7 +200,7 @@ fn["sub_job8_1"]=sub_job8_1
 
 def sub_income_num(studydata, column, context):
     """Please us 98 as the missing code, rather than 999999."""
-    studydata.loc[studydata.sub_income_num.astype(str).str.contains('99'),'sub_income_num']='98'
+    return column.replace({99: 98, 999999: 98})
 fn["sub_income_num"]=sub_income_num
 
 fn["sub_bio_f_country"]=__convert_country_code_to_text
@@ -208,8 +208,7 @@ fn["sub_bio_m_county"]=__convert_country_code_to_text
 
 def sub_mgrade(studydata, column, context):
     """Please recode 13 as 14 (for "High school graduate"), 14 as 13 (for "GED or equivalent"), 15 as 16 (for "Some college, no degree"), 16 as 17 (for "Associate degree: occupational/technical/vocational program"), 17 as 18 (for "Associate degree: academic program"), 18 as 20 (for "Bachelor degree (e.g., BA, AB, BS, BBA)"), 19 as 22 (for "Master's degree (e.g., MA, MS, MEng, MEd, MBA)"), 20 as 23 (for "Professional school degree (e.g., MD, DDS, DVM, JD)"), and 21 as 24 (for "Doctoral degree (e.g., PhD, EdD)")."""
-    studydata['sub_mgradeswitch']=studydata.sub_mgrade.astype(str).replace({'13':'14','14':'13','15':'16','16':'17','17':'18','18':'20','19':'22','20':'23','21':'24'})
-    studydata['sub_mgrade']=studydata.sub_mgradeswitch
+    return column.replace({13:14,14:13,15:16,16:17,17:18,18:20,19:22,20:23,21:24})
 fn["sub_mgrade"]=sub_mgrade
 fn["sub_fgrade"]=sub_mgrade # same logic as above
 

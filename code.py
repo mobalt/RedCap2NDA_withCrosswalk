@@ -1,5 +1,10 @@
 import pandas as pd
 import numpy as np
+import yaml
+
+with open('CONST.yml', 'r') as fd:
+    CONST = yaml.load(fd.read(), Loader=yaml.SafeLoader)
+
 fn = {}
 
 def __increment_0_to_2(studydata, column, context):
@@ -172,7 +177,7 @@ fn["sub_adopt_1unit"]=sub_adopt_1unit
 
 def __convert_country_code_to_text(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    return column.replace({840: 'United States' , 4: 'Afghanistan' , 248: 'Aland Islands' , 8: 'Albania' , 12: 'Algeria' , 16: 'American Samoa' , 20: 'Andorra' , 24: 'Angola' , 660: 'Anguilla' , 10: 'Antarctica' , 28: 'Antigua and Barbuda' , 32: 'Argentina' , 51: 'Armenia' , 533: 'Aruba' , 36: 'Australia' , 40: 'Austria' , 31: 'Azerbaijan' , 44: 'Bahamas' , 48: 'Bahrain' , 50: 'Bangladesh' , 52: 'Barbados' , 112: 'Belarus' , 56: 'Belgium' , 84: 'Belize' , 204: 'Benin' , 60: 'Bermuda' , 64: 'Bhutan' , 68: 'Plurinational State of Bolivia' , 535: 'Bonaire Sint Eustatius and Saba' , 70: 'Bosnia and Herzegovina' , 72: 'Botswana' , 74: 'Bouvet Island' , 76: 'Brazil' , 86: 'British Indian Ocean Territory' , 96: 'Brunei Darussalam' , 100: 'Bulgaria' , 854: 'Burkina Faso' , 108: 'Burundi' , 116: 'Cambodia' , 120: 'Cameroon' , 124: 'Canada' , 132: 'Cape Verde' , 136: 'Cayman Islands' , 140: 'Central African Republic' , 148: 'Chad' , 152: 'Chile' , 156: 'China' , 162: 'Christmas Island' , 166: 'Cocos (Keeling) Islands' , 170: 'Colombia' , 174: 'Comoros' , 178: 'Congo' , 180: 'the Democratic Republic of the Congo' , 184: 'Cook Islands' , 188: 'Costa Rica' , 384: 'Cote dIvoire' , 191: 'Croatia' , 192: 'Cuba' , 531: 'Curacao' , 196: 'Cyprus' , 203: 'Czech Republic' , 208: 'Denmark' , 262: 'Djibouti' , 212: 'Dominica' , 214: 'Dominican Republic' , 218: 'Ecuador' , 818: 'Egypt' , 222: 'El Salvador' , 226: 'Equatorial Guinea' , 232: 'Eritrea' , 233: 'Estonia' , 231: 'Ethiopia' , 238: 'Falkland Islands (Malvinas)' , 234: 'Faroe Islands' , 242: 'Fiji' , 246: 'Finland' , 250: 'France' , 254: 'French Guiana' , 258: 'French Polynesia' , 260: 'French Southern Territories' , 266: 'Gabon' , 270: 'Gambia' , 268: 'Georgia' , 276: 'Germany' , 288: 'Ghana' , 292: 'Gibraltar' , 300: 'Greece' , 304: 'Greenland' , 308: 'Grenada' , 312: 'Guadeloupe' , 316: 'Guam' , 320: 'Guatemala' , 831: 'Guernsey' , 324: 'Guinea' , 624: 'Guinea-Bissau' , 328: 'Guyana' , 332: 'Haiti' , 334: 'Heard Island and McDonald Islands' , 336: 'Holy See (Vatican City State)' , 340: 'Honduras' , 344: 'Hong Kong' , 348: 'Hungary' , 352: 'Iceland' , 356: 'India' , 360: 'Indonesia' , 364: 'Islamic Republic of Iran' , 368: 'Iraq' , 372: 'Ireland' , 833: 'Isle of Man' , 376: 'Israel' , 380: 'Italy' , 388: 'Jamaica' , 392: 'Japan' , 832: 'Jersey' , 400: 'Jordan' , 398: 'Kazakhstan' , 404: 'Kenya' , 296: 'Kiribati' , 408:  'Democratic Peoples Republic of Korea' , 410 : 'Republic of Korea' , 414: 'Kuwait' , 417: 'Kyrgyzstan' , 418: 'Lao Peoples Democratic Republic' , 428: 'Latvia' , 422: 'Lebanon' , 426: 'Lesotho' , 430: 'Liberia' , 434: 'Libya' , 438: 'Liechtenstein' , 440: 'Lithuania' , 442: 'Luxembourg' , 446: 'Macao' , 807: 'the former Yugoslav Republic of Macedonia' , 450: 'Madagascar' , 454: 'Malawi' , 458: 'Malaysia' , 462: 'Maldives' , 466: 'Mali' , 470: 'Malta' , 584: 'Marshall Islands' , 474: 'Martinique' , 478: 'Mauritania' , 480: 'Mauritius' , 175: 'Mayotte' , 484: 'Mexico' , 583: 'Federated States of Micronesia' , 498: 'Republic of Maldova' , 492: 'Monaco' , 496: 'Mongolia' , 499: 'Montenegro' , 500: 'Montserrat' , 504: 'Morocco' , 508: 'Mozambique' , 104: 'Myanmar' , 516: 'Namibia' , 520: 'Nauru' , 524: 'Nepal' , 528: 'Netherlands' , 540: 'New Caledonia' , 554: 'New Zealand' , 558: 'Nicaragua' , 562: 'Niger' , 566: 'Nigeria' , 570: 'Niue' , 574: 'Norfolk Island' , 580: 'Northern Mariana Islands' , 578: 'Norway' , 512: 'Oman' , 586: 'Pakistan' , 585: 'Palau' , 275: 'Occupied Palestinian Territory' , 591: 'Panama' , 598: 'Papua New Guinea' , 600: 'Paraguay' , 604: 'Peru' , 608: 'Philippines' , 612: 'Pitcairn' , 616: 'Poland' , 620: 'Portugal' , 630: 'Puerto Rico' , 634: 'Qatar' , 638: 'Reunion' , 642: 'Romania' , 643: 'Russian Federation' , 646: 'Rwanda' , 652: 'Saint Barthelemy' , 654: 'Saint Helena Ascension and Tristan da Cunha' , 659: 'Saint Kitts and Nevis' , 662: 'Saint Lucia' , 663: 'Saint Martin (French part)' , 666: 'Saint Pierre and Miquelon' , 670: 'Saint Vincent and the Grenadines' , 882: 'Samoa' , 674: 'San Marino' , 678: 'Sao Tome and Principe' , 682: 'Saudi Arabia' , 686: 'Senegal' , 688: 'Serbia' , 690: 'Seychelles' , 694: 'Sierra Leone' , 702: 'Singapore' , 534: 'Sint Maarten (Dutch part)' , 703: 'Slovakia' , 705: 'Slovenia' , 90: 'Solomon Islands' , 706: 'Somalia' , 710: 'South Africa' , 239: 'South Georgia and the South Sandwich Islands' , 728: 'South Sudan' , 724: 'Spain' , 144: 'Sri Lanka' , 729: 'Sudan' , 740: 'Suriname' , 744: 'Svalbard and Jan Mayen' , 748: 'Swaziland' , 752: 'Sweden' , 756: 'Switzerland' , 760: 'Syrian Arab Republic' , 158: 'Taiwan Province of China' , 762: 'Tajikistan' , 834: 'United Republic of Tanzania' , 764: 'Thailand' , 626: 'Timor-Leste' , 768: 'Togo' , 772: 'Tokelau' , 776: 'Tonga' , 780: 'Trinidad and Tobago' , 788: 'Tunisia' , 792: 'Turkey' , 795: 'Turkmenistan' , 796: 'Turks and Caicos Islands' , 798: 'Tuvalu' , 800: 'Uganda' , 804: 'Ukraine' , 784: 'United Arab Emirates' , 826: 'United Kingdom' , 581: 'United States Minor Outlying Islands' , 858: 'Uruguay' , 860: 'Uzbekistan' , 548: 'Vanuatu' , 862: 'Bolivarian Republic of Venezuela' , 704: 'Viet Nam' , 92: 'British Virgin Islands' , 850:  'U.S. Virgin Islands' , 876: 'Wallis and Futuna' , 732: 'Western Sahara' , 887: 'Yemen' , 263: 'Zimbabwe' , 99: 'Dont Know'})
+    return column.replace(CONST.country_codes)
 
 
 fn["sub_country"]=__convert_country_code_to_text
@@ -184,17 +189,17 @@ fn["sub_gender_different"]=sub_gender_different
 
 def sub_marriage(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    studydata['sub_marriage']=studydata.sub_marriage.astype(str).replace({'1' : 'MARRIED' , '2' : 'WIDOWED'  , '3' : 'DIVORCED', '4': 'SEPARATED', '5': 'NEVER MARRIED','6':'LIVING WITH PARTNER','7':'REFUSED','9':'DONT KNOW'})
+    studydata['sub_marriage']=studydata.sub_marriage.astype(str).replace(CONST.marriage_status)
 fn["sub_marriage"]=sub_marriage
 
 def sub_grade(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    studydata['sub_grade']=studydata.sub_grade.astype(str).replace({'0' : 'KINDERGARTEN' , '1' : '1ST GRADE' , '2' : '2ND GRADE' , '3' : '3RD GRADE' , '4' : '4TH GRADE' , '5' : '5TH GRADE' , '6' : '6TH GRADE' , '7' : '7TH GRADE' , '8' : '8TH GRADE' , '9' : '9TH GRADE' , '10' : '10TH GRADE' , '11' : '11TH GRADE' , '12' : '12TH GRADE NO DIPLOMA' , '13' : 'HIGH SCHOOL GRADUATE' , '14' : 'GED OR EQUIVALENT' , '15' : 'SOME COLLEGE NO DEGREE' , '16' : 'ASSOCIATE DEGREE: OCCUPATIONAL TECHNICAL OR VOCATIONAL PROGRAM' , '17' : 'ASSOCIATE DEGREE: ACADEMIC PROGRAM' , '18' : 'BACHELORS DEGREE (EXAMPLE: BA AB BS BBA)' , '19' : 'MASTERS DEGREE (EXAMPLE: MA MS MEng MEd MBA)' , '20' : 'PROFESSIONAL SCHOOL DEGREE (EXAMPLE: MD DDS DVM JD)' , '21' : 'DOCTORAL DEGREE (EXAMPLE:PhD EdD)' , '77' : 'REFUSED' , '99' : 'DONT KNOW'})
+    studydata['sub_grade']=studydata.sub_grade.astype(str).replace(CONST.education)
 fn["sub_grade"]=sub_grade
 
 def sub_job(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    studydata['sub_job']=studydata.sub_job.astype(str).replace({'1': 'WORKING NOW', '2': 'ONLY TEMPORARILY LAID OFF', '2.1': 'SICK LEAVE', '2.2': 'MATERNITY LEAVE', '3.1': 'UNEMPLOYED LOOKING FOR WORK','3.2' : 'UNEMPLOYED NOT LOOKING FOR WORK', '4': 'RETIRED', '5': 'DISABLED PERMANENTLY OR TEMPORARILY', '6' : 'TAKING CARE OF CHILDREN AND/OR RAISING CHILDREN AND/OR CARING FOR AGING PARENTS' , '7': 'STUDENT', '8' : 'OTHER: '})
+    studydata['sub_job']=studydata.sub_job.astype(str).replace(CONST.working_status)
 fn["sub_job"]=sub_job
 
 def sub_job8_1(studydata, column, context):

@@ -70,17 +70,17 @@ for structure in normals.nda_structure:
 
     crosswalk_subset = crosswalk[crosswalk.hcp_variable.isin(variables)][cols_of_interest]
 
-    for in_name, out_name in crosswalk_subset.loc[crosswalk_subset.hcp_variable.isin(list(fn.keys())), ['hcp_variable', 'hcp_variable_upload']].to_records(False):
-        in_column = studydata[in_name] if in_name in studydata else None
+    for x, y in crosswalk_subset.loc[crosswalk_subset.hcp_variable.isin(list(fn.keys())), ['hcp_variable', 'hcp_variable_upload']].to_records(False):
+        X = studydata[x] if x in studydata else None
 
-        if in_name in fn:
-            # print({'name': in_name}, inspect.getsource(fn[in_name]))
+        if x in fn:
+            # print({'name': x}, inspect.getsource(fn[x]))
 
-            result = fn[in_name](studydata, in_column, {'name': in_name})
-            if result is not None and out_name:
-                studydata[out_name] = result
+            result = fn[x](studydata, X, {'name': x})
+            if result is not None and y:
+                studydata[y] = result
         else:
-            studydata[out_name] = in_column
+            studydata[y] = X
 
     # for livewire in crosswalk_subset.requested_python[crosswalk_subset.requested_python.notna()]:
     #     print(livewire)
@@ -106,7 +106,8 @@ for structure in normals.nda_structure:
     dout = ndarsub.merge(studydata[listout], 'left', left_on='src_subject_id', right_on='subject').drop(columns='subject')
     dout.interview_date = dout.interview_date.astype('datetime64').dt.strftime('%m/%d/%Y')
 
-    filepath = f'{pathstructuresout}/HCPD_{structure}_{snapshotdate}.csv'
+#     filepath = f'{pathstructuresout}/HCPD_{structure}_{snapshotdate}.csv'
+    filepath = f'{pathstructuresout}/HCPD_{structure}.csv'
     root, num = structure[:-2], structure[-2:]
 
     with open(filepath, 'w') as fd:

@@ -612,7 +612,7 @@ fn["medhx_1a_other"]=medhx_1a_other
 
 def medhx_6a_notes(studydata, column, context):
     """Please append " times" to each number."""
-    pass
+    return column.mask(column.notna(), column.astype(str) + ' times' )
 fn["medhx_6a_notes"]=medhx_6a_notes
 
 def bld_core_d2p(studydata, column, context):

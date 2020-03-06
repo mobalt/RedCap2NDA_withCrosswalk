@@ -755,121 +755,6 @@ def dummy_var4(studydata, column, context):
     studydata['phenotype']='999'
 fn["dummy_var4"]=dummy_var4
 
-def cbq2(studydata, column, context):
-    """Please rename this column 'cbq31' to avoid a naming conflict."""
-    pass
-fn["cbq2"]=cbq2
-
-def cbq9(studydata, column, context):
-    """Please rename this column 'cbq11' to avoid a naming conflict."""
-    pass
-fn["cbq9"]=cbq9
-
-def cbq10(studydata, column, context):
-    """Please rename this column 'cbq09' to avoid a naming conflict."""
-    pass
-fn["cbq10"]=cbq10
-
-def cbq11(studydata, column, context):
-    """Please rename this column 'cbq_17' to avoid a naming conflict."""
-    pass
-fn["cbq11"]=cbq11
-
-def cbq12(studydata, column, context):
-    """Please rename this column 'cbq49' to avoid a naming conflict."""
-    pass
-fn["cbq12"]=cbq12
-
-def cbq14(studydata, column, context):
-    """Please rename this column 'cbq77' to avoid a naming conflict."""
-    pass
-fn["cbq14"]=cbq14
-
-def cbq15(studydata, column, context):
-    """Please rename this column 'cbq71' to avoid a naming conflict."""
-    pass
-fn["cbq15"]=cbq15
-
-def cbq16(studydata, column, context):
-    """Please rename this column 'cbq62' to avoid a naming conflict."""
-    pass
-fn["cbq16"]=cbq16
-
-def cbq17(studydata, column, context):
-    """Please rename this column 'cbq127' to avoid a naming conflict."""
-    pass
-fn["cbq17"]=cbq17
-
-def cbq18(studydata, column, context):
-    """Please rename this column 'cbq69' to avoid a naming conflict."""
-    pass
-fn["cbq18"]=cbq18
-
-def cbq21(studydata, column, context):
-    """Please rename this column 'cbq03' to avoid a naming conflict."""
-    pass
-fn["cbq21"]=cbq21
-
-def cbq23(studydata, column, context):
-    """Please rename this column 'cbq65' to avoid a naming conflict."""
-    pass
-fn["cbq23"]=cbq23
-
-def cbq24(studydata, column, context):
-    """Please rename this column 'cbq54' to avoid a naming conflict."""
-    pass
-fn["cbq24"]=cbq24
-
-def cbq25(studydata, column, context):
-    """Please rename this column 'cbq84' to avoid a naming conflict."""
-    pass
-fn["cbq25"]=cbq25
-
-def cbq26(studydata, column, context):
-    """Please rename this column 'cbq34' to avoid a naming conflict."""
-    pass
-fn["cbq26"]=cbq26
-
-def cbq27(studydata, column, context):
-    """Please rename this column 'cbq191' to avoid a naming conflict."""
-    pass
-fn["cbq27"]=cbq27
-
-def cbq28(studydata, column, context):
-    """Please rename this column 'cbq028' to avoid a naming conflict."""
-    pass
-fn["cbq28"]=cbq28
-
-def cbq30(studydata, column, context):
-    """Please rename this column 'cbq170' to avoid a naming conflict."""
-    pass
-fn["cbq30"]=cbq30
-
-def cbq31(studydata, column, context):
-    """Please rename this column 'cbq147' to avoid a naming conflict."""
-    pass
-fn["cbq31"]=cbq31
-
-def cbq32(studydata, column, context):
-    """Please rename this column 'cbq39' to avoid a naming conflict."""
-    pass
-fn["cbq32"]=cbq32
-
-def cbq33(studydata, column, context):
-    """Please rename this column 'cbq_94' to avoid a naming conflict."""
-    pass
-fn["cbq33"]=cbq33
-
-def cbq34(studydata, column, context):
-    """Please rename this column 'cbq168' to avoid a naming conflict."""
-    pass
-fn["cbq34"]=cbq34
-
-def cbq35(studydata, column, context):
-    """Please rename this column 'cbq33' to avoid a naming conflict."""
-    pass
-fn["cbq35"]=cbq35
-
 def p_c_gender(studydata, column, context):
     """Please decrement values 1::6 to 0::5. Values of 7 and 8 can remain the same."""
     pass
@@ -934,21 +819,6 @@ def family_income(studydata, column, context):
     """Please convert the code of 999999 to -999999, as 999999 could be an actual value."""
     pass
 fn["family_income"]=family_income
-
-def psqi10(studydata, column, context):
-    """Please rename this column 'parent_sleep20'."""
-    pass
-fn["psqi10"]=psqi10
-
-def psqi3(studydata, column, context):
-    """Please rename this column 'psqip3'."""
-    pass
-fn["psqi3"]=psqi3
-
-def psqi4(studydata, column, context):
-    """Please rename this column 'psqip4'."""
-    pass
-fn["psqi4"]=psqi4
 
 def psqi5a(studydata, column, context):
     """Please increment your 0::3 scale to a 1::4 scale."""
@@ -1051,25 +921,10 @@ def upps_p2(studydata, column, context):
     pass
 fn["upps_p2"]=upps_p2
 
-def upps_p3(studydata, column, context):
-    """Please rename this column 'upps_p4' to avoid a naming conflict. """
-    pass
-fn["upps_p3"]=upps_p3
-
 def upps_p4(studydata, column, context):
     """Please rename this column 'phenx_upps_p_4' to avoid a naming conflict. Also, please reverse code this column."""
     pass
 fn["upps_p4"]=upps_p4
-
-def upps_p5(studydata, column, context):
-    """Please rename this column 'upps_p14' to avoid a naming conflict. """
-    pass
-fn["upps_p5"]=upps_p5
-
-def upps_p6(studydata, column, context):
-    """Please rename this column 'upps_p16' to avoid a naming conflict. """
-    pass
-fn["upps_p6"]=upps_p6
 
 def upps_p7(studydata, column, context):
     """Please rename this column 'phenx_upps_p_7' to avoid a naming conflict. Also, please reverse code this column."""
@@ -1080,16 +935,6 @@ def upps_p8(studydata, column, context):
     """Please rename this column 'upps_p18' to avoid a naming conflict. Also, please reverse code this column."""
     pass
 fn["upps_p8"]=upps_p8
-
-def upps_p9(studydata, column, context):
-    """Please rename this column 'upps_p19' to avoid a naming conflict. """
-    pass
-fn["upps_p9"]=upps_p9
-
-def upps_p10(studydata, column, context):
-    """Please rename this column 'upps_p21' to avoid a naming conflict. """
-    pass
-fn["upps_p10"]=upps_p10
 
 def upps_p11(studydata, column, context):
     """Please rename this column 'phenx_upps_p_11' to avoid a naming conflict. Also, please reverse code this column."""
@@ -1111,16 +956,6 @@ def upps_p14(studydata, column, context):
     pass
 fn["upps_p14"]=upps_p14
 
-def upps_p15(studydata, column, context):
-    """Please rename this column 'upps_p27' to avoid a naming conflict. """
-    pass
-fn["upps_p15"]=upps_p15
-
-def upps_p16(studydata, column, context):
-    """Please rename this column 'upps_p28' to avoid a naming conflict. """
-    pass
-fn["upps_p16"]=upps_p16
-
 def upps_p17(studydata, column, context):
     """Please rename this column 'phenx_upps_p_17' to avoid a naming conflict. Also, please reverse code this column."""
     pass
@@ -1131,11 +966,6 @@ def upps_p18(studydata, column, context):
     pass
 fn["upps_p18"]=upps_p18
 
-def upps_p19(studydata, column, context):
-    """Please rename this column 'upps_p32' to avoid a naming conflict. """
-    pass
-fn["upps_p19"]=upps_p19
-
 def upps_p20(studydata, column, context):
     """Please rename this column 'phenx_upps_p_20' to avoid a naming conflict. Also, please reverse code this column."""
     pass
@@ -1145,26 +975,6 @@ def upps_p21(studydata, column, context):
     """Please rename this column 'phenx_upps_p_21' to avoid a naming conflict. Also, please reverse code this column."""
     pass
 fn["upps_p21"]=upps_p21
-
-def upps_p22(studydata, column, context):
-    """Please rename this column 'upps_p37' to avoid a naming conflict. """
-    pass
-fn["upps_p22"]=upps_p22
-
-def upps_p23(studydata, column, context):
-    """Please rename this column 'upps_p38' to avoid a naming conflict. """
-    pass
-fn["upps_p23"]=upps_p23
-
-def upps_p24(studydata, column, context):
-    """Please rename this column 'upps_p42' to avoid a naming conflict. """
-    pass
-fn["upps_p24"]=upps_p24
-
-def upps_p25(studydata, column, context):
-    """Please rename this column 'upps_p43' to avoid a naming conflict. """
-    pass
-fn["upps_p25"]=upps_p25
 
 def upps_p26(studydata, column, context):
     """Please rename this column 'phenx_upps_p_26' to avoid a naming conflict. Also, please reverse code this column."""

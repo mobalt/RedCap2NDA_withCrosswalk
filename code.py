@@ -211,12 +211,7 @@ def sub_mgrade(studydata, column, context):
     studydata['sub_mgradeswitch']=studydata.sub_mgrade.astype(str).replace({'13':'14','14':'13','15':'16','16':'17','17':'18','18':'20','19':'22','20':'23','21':'24'})
     studydata['sub_mgrade']=studydata.sub_mgradeswitch
 fn["sub_mgrade"]=sub_mgrade
-
-def sub_fgrade(studydata, column, context):
-    """Please recode 13 as 14 (for "High school graduate"), 14 as 13 (for "GED or equivalent"), 15 as 16 (for "Some college, no degree"), 16 as 17 (for "Associate degree: occupational/technical/vocational program"), 17 as 18 (for "Associate degree: academic program"), 18 as 20 (for "Bachelor degree (e.g., BA, AB, BS, BBA)"), 19 as 22 (for "Master's degree (e.g., MA, MS, MEng, MEd, MBA)"), 20 as 23 (for "Professional school degree (e.g., MD, DDS, DVM, JD)"), and 21 as 24 (for "Doctoral degree (e.g., PhD, EdD)")."""
-    studydata['sub_fgradeswitch']=studydata.sub_fgrade.astype(str).replace({'13':'14','14':'13','15':'16','16':'17','17':'18','18':'20','19':'22','20':'23','21':'24'})
-    studydata['sub_fgrade']=studydata.sub_fgradeswitch
-fn["sub_fgrade"]=sub_fgrade
+fn["sub_fgrade"]=sub_mgrade # same logic as above
 
 def dummy_var14(studydata, column, context):
     """Please specify a time range of "Past 4 weeks" for all records."""
@@ -684,14 +679,7 @@ def mstrl_sub1a(studydata, column, context):
         2: 'No hypothyroidism'
     })
 fn["mstrl_sub1a"]=mstrl_sub1a
-
-def mstrl_sub1b(studydata, column, context):
-    """Please change numeric codes to the text strings they represent."""
-    return column.replace({
-        1: 'Hypothyroidism',
-        2: 'No hypothyroidism'
-    })
-fn["mstrl_sub1b"]=mstrl_sub1b
+fn["mstrl_sub1b"]=mstrl_sub1a #same logic as above
 
 def __prepend_age_at_onset(studydata, column, context):
     """Please prepend "Age at onset: " to ages."""

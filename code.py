@@ -615,15 +615,6 @@ def medhx_6a_notes(studydata, column, context):
     return column.mask(column.notna(), column.astype(str) + ' times' )
 fn["medhx_6a_notes"]=medhx_6a_notes
 
-def bld_core_d2p(studydata, column, context):
-    """Please split this column into 'bld_core_d2ph' for hours and 'bld_core_d2pm' for minutes."""
-    pass
-fn["bld_core_d2p"]=bld_core_d2p
-
-def bld_core_d2p(studydata, column, context):
-    """Please split this column into 'bld_core_d2ph' for hours and 'bld_core_d2pm' for minutes."""
-    pass
-fn["bld_core_d2p"]=bld_core_d2p
 
 def hba1c(studydata, column, context):
     """When the quantity was not sufficient, please leave the cells blank rather than use a missing code."""

@@ -710,26 +710,24 @@ fn["dummy_var17"]=dummy_var17
 
 def srsa_total_raw(studydata, column, context):
     """Please split total raw scores by sex. Females' scores can go in 'female_rawscoreall'. Males' scores can go in 'male_rawscoreall'."""
-    studydata['female_rawscoreall']=studydata.srsa_total_raw
-    studydata.loc[studydata.gender!='F','female_rawscoreall']=''
+    studydata['female_rawscoreall']=column.where(studydata.gender=='F')
+    studydata['male_rawscoreall']=column.where(studydata.gender=='M')
 fn["srsa_total_raw"]=srsa_total_raw
 
 def dummy18(studydata, column, context):
     """Please split total raw scores by sex. Females' scores can go in 'female_rawscoreall'. Males' scores can go in 'male_rawscoreall'."""
-    studydata['male_rawscoreall']=studydata.srsa_total_raw
-    studydata.loc[studydata.gender!='M','male_rawscoreall']=''
+    pass
 fn["dummy18"]=dummy18
 
 def srsa_total_tscore(studydata, column, context):
     """Please split total T-scores by sex. Males' scores can go in 'male_tscoreall'. Females' scores can go in 'female_tscoreall'."""
-    studydata['male_tscoreall']=studydata.srsa_total_tscore
-    studydata.loc[studydata.gender!='M','male_tscoreall']=''
+    studydata['female_tscoreall']=column.where(studydata.gender=='F')
+    studydata['male_tscoreall']=column.where(studydata.gender=='M')
 fn["srsa_total_tscore"]=srsa_total_tscore
 
 def dummy19(studydata, column, context):
     """Please split total T-scores by sex. Males' scores can go in 'male_tscoreall'. Females' scores can go in 'female_tscoreall'."""
-    studydata['female_tscoreall']=studydata.srsa_total_tscore
-    studydata.loc[studydata.gender!='F','female_tscoreall']=''
+    pass
 fn["dummy19"]=dummy19
 
 def dummy_var1(studydata, column, context):

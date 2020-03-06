@@ -223,13 +223,8 @@ def mctq_free9(studydata, column, context):
         1: 'Familymembers/pet(s)',
         2: 'Hobbies',
         3: 'Other: ',
-    })
+    }) + studydata.mctq_free10
 fn["mctq_free9"]=mctq_free9
-
-def mctq_free10(studydata, column, context):
-    """Please combine mctq_free9 and mctq_free10 under one column (either name would be fine). Please also convert mctq_free9's numeric codes to the text strings they represent."""
-    studydata.mctq_free10=studydata.mctq_free9+studydata.mctq_free10
-fn["mctq_free10"]=mctq_free10
 
 def neo1(studydata, column, context):
     """Please decrement your 1::5 scale to a 0::4 scale"""

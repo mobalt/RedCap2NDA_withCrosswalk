@@ -168,30 +168,30 @@ fn["sub_adopt_1"]=sub_adopt_1
 
 def __convert_country_code_to_text(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    return column.replace(CONST.country_codes)
+    return column.replace(CONST['country_codes'])
 
 
 fn["sub_country"]=__convert_country_code_to_text
 
 def sub_gender(studydata, column, context):
     """Gender identity is a free-text field. Please concatenate responses from 'sub_gender' and 'sub_gender_different' in the 'sub_gender' column."""
-    return column.astype(str).replace(CONST.gender) + studydata.sub_gender_different
+    return column.astype(str).replace(CONST['gender']) + studydata.sub_gender_different
 fn["sub_gender"]=sub_gender
 
 def sub_marriage(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    return column.replace(CONST.marriage_status)
+    return column.replace(CONST['marriage_status'])
 fn["sub_marriage"]=sub_marriage
 
 def sub_grade(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    return column.replace(CONST.education)
+    return column.replace(CONST['education'])
 fn["sub_grade"]=sub_grade
 
 def sub_job(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
     """Because 'sub_job' is a free-text field, please concatenate subjects' specified answers with 'sub_job' answers."""
-    return column.replace(CONST.working_status) + studydata.sub_job8_1
+    return column.replace(CONST['working_status']) + studydata.sub_job8_1
 fn["sub_job"]=sub_job
 
 def sub_job8_1(studydata, column, context):

@@ -190,12 +190,12 @@ fn["sub_grade"]=sub_grade
 
 def sub_job(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    studydata['sub_job']=studydata.sub_job.astype(str).replace(CONST.working_status)
+    """Because 'sub_job' is a free-text field, please concatenate subjects' specified answers with 'sub_job' answers."""
+    return column.replace(CONST.working_status) + studydata.sub_job8_1
 fn["sub_job"]=sub_job
 
 def sub_job8_1(studydata, column, context):
-    """Because 'sub_job' is a free-text field, please concatenate subjects' specified answers with 'sub_job' answers."""
-    studydata['sub_job']=studydata.sub_job+studydata.sub_job8_1
+    pass
 fn["sub_job8_1"]=sub_job8_1
 
 def sub_income_num(studydata, column, context):

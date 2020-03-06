@@ -568,145 +568,37 @@ def __prepend_onset(studydata, column, context):
 
 fn["mstrl_p1c_age"]=__prepend_onset
 
-def upps_p1(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_1' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p1"]=upps_p1
-
-def upps_p2(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_2' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p2"]=upps_p2
-
-def upps_p4(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_4' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p4"]=upps_p4
-
-def upps_p7(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_7' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p7"]=upps_p7
-
-def upps_p8(studydata, column, context):
-    """Please rename this column 'upps_p18' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p8"]=upps_p8
-
-def upps_p11(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_11' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p11"]=upps_p11
-
-def upps_p12(studydata, column, context):
-    """Please rename this column 'upps_p23' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p12"]=upps_p12
-
-def upps_p13(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_13' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p13"]=upps_p13
-
-def upps_p14(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_14' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p14"]=upps_p14
-
-def upps_p17(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_17' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p17"]=upps_p17
-
-def upps_p18(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_18' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p18"]=upps_p18
-
-def upps_p20(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_20' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p20"]=upps_p20
-
-def upps_p21(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_21' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p21"]=upps_p21
-
-def upps_p26(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_26' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p26"]=upps_p26
-
-def upps_p27(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_27' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p27"]=upps_p27
-
-def upps_p28(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_28' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p28"]=upps_p28
-
-def upps_p29(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_29' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p29"]=upps_p29
-
-def upps_p30(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_30' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p30"]=upps_p30
-
-def upps_p31(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_31' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p31"]=upps_p31
-
-def upps_p32(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_32' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p32"]=upps_p32
-
-def upps_p33(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_33' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p33"]=upps_p33
-
-def upps_p34(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_34' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p34"]=upps_p34
-
-def upps_p35(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_35' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p35"]=upps_p35
-
-def upps_p36(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_36' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p36"]=upps_p36
-
-def upps_p37(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_37' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p37"]=upps_p37
-
-def upps_p38(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_38' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p38"]=upps_p38
-
-def upps_p39(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_39' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p39"]=upps_p39
-
-def upps_p40(studydata, column, context):
-    """Please rename this column 'phenx_upps_p_40' to avoid a naming conflict. Also, please reverse code this column."""
-    pass
-fn["upps_p40"]=upps_p40
+def __reverse_1_4_to_4_1(studydata, column, context):
+    "Please reverse code this column. (Range: 1-4)"
+    return column.replace({4:1, 3:2, 2:3, 1:4})
+fn["upps_p1"]=__reverse_1_4_to_4_1
+fn["upps_p2"]=__reverse_1_4_to_4_1
+fn["upps_p4"]=__reverse_1_4_to_4_1
+fn["upps_p7"]=__reverse_1_4_to_4_1
+fn["upps_p8"]=__reverse_1_4_to_4_1
+fn["upps_p11"]=__reverse_1_4_to_4_1
+fn["upps_p12"]=__reverse_1_4_to_4_1
+fn["upps_p13"]=__reverse_1_4_to_4_1
+fn["upps_p14"]=__reverse_1_4_to_4_1
+fn["upps_p17"]=__reverse_1_4_to_4_1
+fn["upps_p18"]=__reverse_1_4_to_4_1
+fn["upps_p20"]=__reverse_1_4_to_4_1
+fn["upps_p21"]=__reverse_1_4_to_4_1
+fn["upps_p26"]=__reverse_1_4_to_4_1
+fn["upps_p27"]=__reverse_1_4_to_4_1
+fn["upps_p28"]=__reverse_1_4_to_4_1
+fn["upps_p29"]=__reverse_1_4_to_4_1
+fn["upps_p30"]=__reverse_1_4_to_4_1
+fn["upps_p31"]=__reverse_1_4_to_4_1
+fn["upps_p32"]=__reverse_1_4_to_4_1
+fn["upps_p33"]=__reverse_1_4_to_4_1
+fn["upps_p34"]=__reverse_1_4_to_4_1
+fn["upps_p35"]=__reverse_1_4_to_4_1
+fn["upps_p36"]=__reverse_1_4_to_4_1
+fn["upps_p37"]=__reverse_1_4_to_4_1
+fn["upps_p38"]=__reverse_1_4_to_4_1
+fn["upps_p39"]=__reverse_1_4_to_4_1
+fn["upps_p40"]=__reverse_1_4_to_4_1
 
 def medhx_1a(studydata, column, context):
     """Please keep data for these columns in their own rows, with 'version_form' labeling them "Past Year"."""

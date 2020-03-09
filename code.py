@@ -469,7 +469,7 @@ fn["p_gender_different"]=p_gender_different
 
 def p_race(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    pass
+    return column.replace(CONST['race'])
 fn["p_race"]=p_race
 
 def p_country(studydata, column, context):

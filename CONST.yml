@@ -303,3 +303,11 @@ gender:
   6: 'Different identity:'
   7: REFUSED
   8: DONT KNOW
+race:
+  12: NATIVE AMERICAN/ALASKA NATIVE
+  18: ASIAN
+  11: BLACK/AFRICAN AMERICAN
+  14: NATIVE HAWAIIAN or OTHER PACIFIC ISLANDER
+  10: WHITE
+  25: More than one race
+  99: Unknown or not reported

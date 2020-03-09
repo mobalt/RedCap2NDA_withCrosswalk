@@ -459,10 +459,7 @@ def p_c_gender(studydata, column, context):
     })
 fn["p_c_gender"]=p_c_gender
 
-def p_c_country(studydata, column, context):
-    """Please convert numeric codes to the text strings they represent."""
-    pass
-fn["p_c_country"]=p_c_country
+fn["p_c_country"]=__convert_country_code_to_text
 
 def p_gender(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
@@ -474,21 +471,9 @@ def p_race(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
     return column.replace(CONST['race'])
 fn["p_race"]=p_race
-
-def p_country(studydata, column, context):
-    """Please convert numeric codes to the text strings they represent."""
-    pass
-fn["p_country"]=p_country
-
-def p_bio_f_country(studydata, column, context):
-    """Please convert numeric codes to the text strings they represent."""
-    pass
-fn["p_bio_f_country"]=p_bio_f_country
-
-def p_bio_m_county(studydata, column, context):
-    """Please convert numeric codes to the text strings they represent."""
-    pass
-fn["p_bio_m_county"]=p_bio_m_county
+fn["p_country"]=__convert_country_code_to_text
+fn["p_bio_f_country"]=__convert_country_code_to_text
+fn["p_bio_m_county"]=__convert_country_code_to_text
 
 def p_marriage(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""

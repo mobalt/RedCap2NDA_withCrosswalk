@@ -541,15 +541,8 @@ def pds_p_score(studydata, column, context):
     studydata['pds_pv_boy_tanner'] = column.where(studydata.gender=='M')
 fn["pds_p_score"]=pds_p_score
 
-def mstrl_p1a(studydata, column, context):
-    """Please convert these numeric codes to the text strings they represent."""
-    pass
-fn["mstrl_p1a"]=mstrl_p1a
-
-def mstrl_p1b(studydata, column, context):
-    """Please convert these numeric codes to the text strings they represent."""
-    pass
-fn["mstrl_p1b"]=mstrl_p1b
+fn["mstrl_p1a"]=__recode_1_2_as_yes_no
+fn["mstrl_p1b"]=__recode_1_2_as_yes_no
 
 def __prepend_onset(studydata, column, context):
     """Please prepend "Onset: " to ages."""

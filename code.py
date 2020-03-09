@@ -459,13 +459,9 @@ fn["p_c_country"]=p_c_country
 
 def p_gender(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    pass
+    """Please combine 'p_gender_different' responses with those from 'p_gender' in a single column with either name."""
+    return column.replace(CONST['gender']) + studydata.p_gender_different
 fn["p_gender"]=p_gender
-
-def p_gender_different(studydata, column, context):
-    """Please combine these responses with those from 'p_gender' in a single column with either name."""
-    pass
-fn["p_gender_different"]=p_gender_different
 
 def p_race(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""

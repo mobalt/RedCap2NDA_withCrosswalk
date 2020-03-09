@@ -449,7 +449,14 @@ fn["dummy_var4"]=dummy_var4
 
 def p_c_gender(studydata, column, context):
     """Please decrement values 1::6 to 0::5. Values of 7 and 8 can remain the same."""
-    pass
+    return column.replace({
+        1: 0,
+        2: 1,
+        3: 2,
+        4: 3,
+        5: 4,
+        6: 5,
+    })
 fn["p_c_gender"]=p_c_gender
 
 def p_c_country(studydata, column, context):
@@ -505,7 +512,7 @@ fn["ptner_grade"]=ptner_grade
 
 def family_income(studydata, column, context):
     """Please convert the code of 999999 to -999999, as 999999 could be an actual value."""
-    pass
+    return column.replace({999999: -999999})
 fn["family_income"]=family_income
 
 def __increment_0_3_to_1_4(studydata, column, context):
@@ -525,22 +532,22 @@ fn["psqi5j_2"]=__increment_0_3_to_1_4
 
 def devhx_8_prescript_med(studydata, column, context):
     """Please recode 0 as 999 (for "Don't Know")."""
-    pass
+    return column.replace({0:999})
 fn["devhx_8_prescript_med"]=devhx_8_prescript_med
 
 def devhx_9_prescript_med(studydata, column, context):
     """Please recode 0 as 999 (for "Don't Know")."""
-    pass
+    return column.replace({0:999})
 fn["devhx_9_prescript_med"]=devhx_9_prescript_med
 
 def pds_p_g5a(studydata, column, context):
     """Please recode 1 as 2 (for "No")."""
-    pass
+    return column.replace({1:2})
 fn["pds_p_g5a"]=pds_p_g5a
 
 def pds_p_mss_bcontrol(studydata, column, context):
     """Please recode 2 as 0 (for "No")."""
-    pass
+    return column.replace({2:0})
 fn["pds_p_mss_bcontrol"]=pds_p_mss_bcontrol
 
 def pds_p_score(studydata, column, context):

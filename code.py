@@ -537,7 +537,8 @@ fn["pds_p_mss_bcontrol"]=pds_p_mss_bcontrol
 
 def pds_p_score(studydata, column, context):
     """Please split this field between 'pds_pv_boy_tanner' for boys and 'pds_pv_girl_tanner' for girls."""
-    pass
+    studydata['pds_pv_girl_tanner'] = column.where(studydata.gender=='F')
+    studydata['pds_pv_boy_tanner'] = column.where(studydata.gender=='M')
 fn["pds_p_score"]=pds_p_score
 
 def mstrl_p1a(studydata, column, context):

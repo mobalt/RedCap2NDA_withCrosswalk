@@ -494,7 +494,7 @@ fn["p_marriage"]=p_marriage
 
 def p_grade(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    pass
+    return column.replace(CONST['education'])
 fn["p_grade"]=p_grade
 
 def p_job(studydata, column, context):
@@ -504,7 +504,7 @@ fn["p_job"]=p_job
 
 def ptner_grade(studydata, column, context):
     """Please convert numeric codes to the text strings they represent."""
-    pass
+    return column.replace(CONST['education'])
 fn["ptner_grade"]=ptner_grade
 
 def family_income(studydata, column, context):
